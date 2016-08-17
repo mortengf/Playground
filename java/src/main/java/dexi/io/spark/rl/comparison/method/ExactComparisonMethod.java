@@ -1,6 +1,6 @@
-package dexi.io.spark.rl.comparison;
+package dexi.io.spark.rl.comparison.method;
 
-public class ExactComparison extends ComparisonMethod {
+public class ExactComparisonMethod extends ComparisonMethod {
 
     @Override
     public boolean compare() {

@@ -2,6 +2,6 @@ package dexi.io.spark.rl;
 
 import java.util.List;
 
-public class KeyDTO {
+public class ValueFieldDTO extends FieldDTO {
     private List<FieldDTO> fields;
 }
