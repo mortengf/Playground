@@ -1,4 +1,4 @@
-package dexi.io.spark.rl;
+package dexi.io.spark.rl.dto;
 
 import dexi.io.spark.rl.comparison.method.ComparisonMethod;
 import dexi.io.spark.rl.comparison.method.ComparisonMethodFactory;

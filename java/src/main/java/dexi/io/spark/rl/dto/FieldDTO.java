@@ -1,4 +1,4 @@
-package dexi.io.spark.rl;
+package dexi.io.spark.rl.dto;
 
 public abstract class FieldDTO {
     protected String name;
