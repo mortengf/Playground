@@ -1,4 +1,4 @@
-package dexi.io.spark.spark;
+package dexi.io.spark;
 
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaRDD;

@@ -1,4 +1,4 @@
-package dexi.io.spark.spark.rl;
+package dexi.io.spark.rl;
 
 import java.util.ArrayList;
 import java.util.HashMap;

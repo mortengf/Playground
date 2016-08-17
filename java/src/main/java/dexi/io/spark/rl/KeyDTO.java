@@ -1,7 +1,7 @@
-package dexi.io.spark.spark.rl;
+package dexi.io.spark.rl;
 
 import java.util.List;
 
-public class ValueDTO {
+public class KeyDTO {
     private List<FieldDTO> fields;
 }
