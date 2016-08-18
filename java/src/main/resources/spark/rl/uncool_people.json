@@ -1,0 +1,8 @@
+{
+  "people": [
+    { "firstName": "Donald", "lastName": "Trump", "age": 70, "sex": "M" },
+    { "firstName": "Pia", "lastName": "Kjærsgaard", "age": 69, "sex": "F" },
+    { "firstName": "Sam", "lastName": "Harris", "age": 50, "sex": "M" }
+  ]
+
+}

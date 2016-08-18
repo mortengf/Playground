@@ -10,8 +10,9 @@ import java.util.Map;
 import java.util.Set;
 
 public class KeyFieldDTO extends FieldDTO {
-
+    // TODO: not needed?
     private List<FieldDTO> fields;
+
     private Double weight;
 
     private Map<String, Set<ComparisonMethod>> availableComparisonMethods;
@@ -20,9 +21,8 @@ public class KeyFieldDTO extends FieldDTO {
     private Map<String, Set<DataCleaningMethod>> availableDataCleaningMethods;
     private Map<String, Set<DataCleaningMethod>> selectedDataCleaningMethods;
 
-    public KeyFieldDTO(String name, String dataType) {
-        this.name = name;
-        this.dataType = dataType;
+    public KeyFieldDTO(String name, String dataType, Object value) {
+        super(name, dataType, value);
         this.availableComparisonMethods = ComparisonMethodFactory.getComparisonMethods();
         this.availableDataCleaningMethods = DataCleaningMethodFactory.getDataCleaningMethods();
     }

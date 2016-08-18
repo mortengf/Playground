@@ -37,7 +37,7 @@ public class SparkFun {
 
         System.out.println("Reduced: " + reduced);
 
-        JavaRDD<String> distFileLines = sc.textFile("src/main/resources/sparkdata.txt");
+        JavaRDD<String> distFileLines = sc.textFile("src/main/resources/spark/randomdata.txt");
         JavaRDD<Object> mappedData = distFileLines.map(new Function<String, Object>() {
             public Object call(String s) throws Exception {
                 return "Line: " + s;
