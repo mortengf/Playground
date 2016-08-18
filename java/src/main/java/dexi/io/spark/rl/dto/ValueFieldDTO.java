@@ -1,12 +1,20 @@
 package dexi.io.spark.rl.dto;
 
-import java.util.List;
+import org.apache.spark.sql.types.DataType;
 
 public class ValueFieldDTO extends FieldDTO {
-    // TODO: not needed?
-    private List<FieldDTO> fields;
 
     public ValueFieldDTO(String name, String dataType, Object value) {
         super(name, dataType, value);
+    }
+
+    @Override
+    public int defaultSize() {
+        return 0;
+    }
+
+    @Override
+    public DataType asNullable() {
+        return null;
     }
 }

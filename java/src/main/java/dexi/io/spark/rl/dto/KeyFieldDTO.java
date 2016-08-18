@@ -4,15 +4,12 @@ import dexi.io.spark.rl.comparison.method.ComparisonMethod;
 import dexi.io.spark.rl.comparison.method.ComparisonMethodFactory;
 import dexi.io.spark.rl.data_cleaning.DataCleaningMethod;
 import dexi.io.spark.rl.data_cleaning.DataCleaningMethodFactory;
+import org.apache.spark.sql.types.DataType;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class KeyFieldDTO extends FieldDTO {
-    // TODO: not needed?
-    private List<FieldDTO> fields;
-
     private Double weight;
 
     private Map<String, Set<ComparisonMethod>> availableComparisonMethods;
@@ -27,4 +24,13 @@ public class KeyFieldDTO extends FieldDTO {
         this.availableDataCleaningMethods = DataCleaningMethodFactory.getDataCleaningMethods();
     }
 
+    @Override
+    public int defaultSize() {
+        return 0;
+    }
+
+    @Override
+    public DataType asNullable() {
+        return null;
+    }
 }
