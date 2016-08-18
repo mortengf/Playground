@@ -43,28 +43,8 @@ public class SparkRecordLinkageFun {
         Dataset<Row> cartesianProduct = coolPeople.join(uncoolPeople);
         Object cartesianProductCollected = cartesianProduct.collect();
 
-        MapFunction<KeyFieldDTO, ValueFieldDTO> keyPeople = new MapFunction<KeyFieldDTO, ValueFieldDTO>() {
-            public ValueFieldDTO call(KeyFieldDTO value) throws Exception {
-                return null;
-            }
-        };
-
         Dataset<Row> sumSet = coolPeople.groupBy("firstName").sum("age");
         Object collect = sumSet.collect();
-
-        // TODO: convert "coolPeople" collection into RecordDTO/Tuple2 how? Implement PairFunction,
-        // c.f. https://www.safaribooksonline.com/library/view/learning-spark/9781449359034/ch04.html ?
-        // UPDATE: we will not be able to use PairFunction for RL across data sets because it only works on a single
-        // data set?
-        /*
-        PairFunction<Person, KeyFieldDTO, ValueFieldDTO> keyData =
-            new PairFunction<Person, KeyFieldDTO, ValueFieldDTO>() {
-                public Tuple2<KeyFieldDTO, ValueFieldDTO> call(Person person) throws Exception {
-                    return null;
-                }
-
-        };
-        */
 
     }
 
