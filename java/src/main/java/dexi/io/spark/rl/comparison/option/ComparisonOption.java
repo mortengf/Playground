@@ -1,6 +1,8 @@
 package dexi.io.spark.rl.comparison.option;
 
-public abstract class ComparisonOption {
+import java.io.Serializable;
+
+public abstract class ComparisonOption implements Serializable {
     protected String options;
 
     public ComparisonOption(String options) {

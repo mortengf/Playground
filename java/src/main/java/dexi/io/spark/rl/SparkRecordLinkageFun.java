@@ -1,5 +1,6 @@
 package dexi.io.spark.rl;
 
+import dexi.io.spark.rl.dto.*;
 import org.apache.avro.Schema;
 import org.apache.avro.specific.SpecificRecord;
 import org.apache.avro.specific.SpecificRecordBase;
@@ -13,14 +14,18 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SQLContext;
 import org.apache.spark.sql.SparkSession;
+import org.apache.spark.sql.types.DataType;
+import org.apache.spark.sql.types.DataTypes;
+import org.apache.spark.sql.types.StructField;
 import org.apache.spark.sql.types.StructType;
 import scala.Tuple2;
+import scala.collection.Seq;
 
 public class SparkRecordLinkageFun {
 
     /*
-    private static List<Tuple2<KeyFieldDTO, ValueFieldDTO>> defineKeyAndValues(Dataset<Row> people) {
-        List<Tuple2<KeyFieldDTO, ValueFieldDTO>> tuples = new ArrayList<Tuple2<KeyFieldDTO, ValueFieldDTO>>();
+    private static List<Tuple2<KeyDTO, ValueDTO>> defineKeyAndValues(Dataset<Row> people) {
+        List<Tuple2<KeyDTO, ValueDTO>> tuples = new ArrayList<Tuple2<KeyDTO, ValueDTO>>();
 
         if (people != null) {
             for (Row person : people) {
@@ -30,6 +35,24 @@ public class SparkRecordLinkageFun {
 
         return tuples;
     }
+    */
+
+    /*
+    private static MapFunction<Row, Tuple2<KeyDTO, ValueDTO>> defineKeyAndValues = new MapFunction<Row,
+            Tuple2<KeyDTO, ValueDTO>>() {
+        public Tuple2<KeyDTO, ValueDTO> call(Row person) throws Exception {
+            Tuple2<KeyDTO, ValueDTO> result = null;
+            // If person.<attr> == any KeyDTO.name then add person.<attr> and person.<attr>.<value> to KeyDTO
+            // Else add  person.<attr> and person.<attr>.<value> to ValueDTO
+
+            StructType schema = person.schema();
+            if (schema != null) {
+                //schema.
+            }
+
+            return result;
+        }
+    };
     */
 
     private enum Sex {
@@ -102,24 +125,7 @@ public class SparkRecordLinkageFun {
          */
 
         /*
-        MapFunction<Row, Tuple2<KeyFieldDTO, ValueFieldDTO>> defineKeyAndValues = new MapFunction<Row, Tuple2<KeyFieldDTO, ValueFieldDTO>>() {
-            public Tuple2<KeyFieldDTO, ValueFieldDTO> call(Row person) throws Exception {
-                Tuple2<KeyFieldDTO, ValueFieldDTO> result = null;
-                // If person.<attr> == any KeyFieldDTO.name then add person.<attr> and person.<attr>.<value> to KeyFieldDTO
-                // Else add  person.<attr> and person.<attr>.<value> to ValueFieldDTO
-
-                StructType schema = person.schema();
-                if (schema != null) {
-                    //schema.
-                }
-
-                return result;
-            }
-        };
-        */
-
-        /*
-        KeyValueGroupedDataset<Tuple2<KeyFieldDTO, ValueFieldDTO>, Row> coolPeopleKeyValueGroupedDataset =
+        KeyValueGroupedDataset<Tuple2<KeyDTO, ValueDTO>, Row> coolPeopleKeyValueGroupedDataset =
                 coolPeopleDataset.groupByKey(defineKeyAndValues, null);// TODO: define Encoder how?
         */
 
@@ -127,7 +133,7 @@ public class SparkRecordLinkageFun {
         coolPeopleDataset.printSchema();
 
         // Cartesian product
-        System.out.println("Cartesian product...");
+        System.out.println("Performing Cartesian product...");
         Dataset<Row> cartesianProduct = coolPeopleDataset.join(uncoolPeopleDataset);
         JavaRDD<Row> cartesianProductRDD = cartesianProduct.toJavaRDD();
         cartesianProductRDD.foreach(new VoidFunction<Row>() {
@@ -135,24 +141,77 @@ public class SparkRecordLinkageFun {
                 System.out.println(row);
             }
         });
+        System.out.println("Cartesian product done");
 
-        // JOIN - Pair
-        System.out.println("JOIN - Pair...");
-        PairFunction<Row, Object, Object> peoplePairFunction = new PairFunction<Row, Object, Object>() {
-            public Tuple2<Object, Object> call(Row row) throws Exception {
-                return new Tuple2<Object, Object>(row.get(1), row.get(2));
+        // RL: JOIN with pairs
+
+        // Statically define RL config
+        // TODO: this must be possible to define dynamically
+        final RLConfig rlConfig = new RLConfig();
+
+        rlConfig.addKeyField(new KeyFieldDTO("firstName", DataTypes.StringType));
+        rlConfig.addKeyField(new KeyFieldDTO("lastName", DataTypes.StringType));
+
+        rlConfig.addValueField(new FieldDTO("age", DataTypes.LongType));
+        rlConfig.addValueField(new FieldDTO("sex", DataTypes.StringType));
+
+        final int numberOfRLConfigFields = rlConfig.getKeyFields().size() + rlConfig.getValueFields().size();
+
+        System.out.println("Key-Valuing (pairing) each data set...");
+        PairFunction<Row, KeyDTO, ValueDTO> peoplePairFunction = new PairFunction<Row, KeyDTO, ValueDTO>() {
+            public Tuple2<KeyDTO, ValueDTO> call(Row row) throws Exception {
+                StructType schema = row.schema();
+                Seq<StructField> seq = schema.seq();
+                StructField[] fields = ((StructType) seq).fields();
+
+                if (fields.length != numberOfRLConfigFields) {
+                    throw new IllegalArgumentException("Fields of row does not match RL Config");
+                }
+
+                KeyDTO keyDTO = new KeyDTO();
+                ValueDTO valueDTO = new ValueDTO();
+                for (StructField field : fields) {
+                    String name = field.name();
+                    DataType dataType = field.dataType();
+                    Object fieldValue = row.getAs(name); // TODO: this will throw IllegalArgumentException if field
+                    // with name does not exist => set value after checking if field exists in RL config - BUT this
+                    // requires to do the "is key/value?" check again?
+
+                    boolean isKeyField = rlConfig.containsKeyField(name, dataType);
+                    boolean isValueField = rlConfig.containsValueField(name, dataType);
+
+                    if (isKeyField) {
+                        KeyFieldDTO keyField = new KeyFieldDTO(name, dataType);
+                        keyField.setValue(fieldValue);
+                        keyDTO.addKeyField(keyField);
+                    } else if (isValueField) {
+                        FieldDTO valueField = new FieldDTO(name, dataType);
+                        valueField.setValue(fieldValue);
+                        valueDTO.addValueField(valueField);
+                    } else {
+                        System.err.println("ERROR: field " + name + " is not defined in RL config as neither key " +
+                                "or value field");
+                        continue;
+                    }
+                }
+
+                // TODO: change output to be Tuple2<KeyDTO, ValueDTO>
+                return new Tuple2<KeyDTO, ValueDTO>(keyDTO, valueDTO);
             }
         };
 
-        JavaPairRDD<Object, Object> coolPeoplePairRDD = coolPeopleRDD.mapToPair(peoplePairFunction);
-        JavaPairRDD<Object, Object> uncoolPeoplePairRDD = uncoolPeopleRDD.mapToPair(peoplePairFunction);
+        JavaPairRDD<KeyDTO, ValueDTO> coolPeoplePairRDD = coolPeopleRDD.mapToPair(peoplePairFunction);
+        JavaPairRDD<KeyDTO, ValueDTO> uncoolPeoplePairRDD = uncoolPeopleRDD.mapToPair(peoplePairFunction);
+        System.out.println("Key-Valuing (pairing) done");
 
-        JavaPairRDD<Object, Tuple2<Object, Object>> joined = coolPeoplePairRDD.join(uncoolPeoplePairRDD);
-        joined.foreach(new VoidFunction<Tuple2<Object, Tuple2<Object, Object>>>() {
-            public void call(Tuple2<Object, Tuple2<Object, Object>> tuple) throws Exception {
+        System.out.println("Performing RL...");
+        JavaPairRDD<KeyDTO, Tuple2<ValueDTO, ValueDTO>> joined = coolPeoplePairRDD.join(uncoolPeoplePairRDD);
+        joined.foreach(new VoidFunction<Tuple2<KeyDTO, Tuple2<ValueDTO, ValueDTO>>>() {
+            public void call(Tuple2<KeyDTO, Tuple2<ValueDTO, ValueDTO>> tuple) throws Exception {
                 System.out.println(tuple);
             }
         });
+        System.out.println("RL done");
 
 
         /*
@@ -164,7 +223,7 @@ public class SparkRecordLinkageFun {
 
         // -----------------
 
-        //RecordDTO recordDTO = new RecordDTO();
+        //RLConfig recordDTO = new RLConfig();
 
         //FieldDTO key = new FieldDTO("firstName", "String", "Elon");
         //FieldDTO lastName = new FieldDTO("lastName", "String", "Musk");
@@ -173,7 +232,7 @@ public class SparkRecordLinkageFun {
         //recordDTO.addField(age);
         //recordDTO.addField(sex);
 
-        //MapType PersonRecordType = DataTypes.createMapType(recordDTO.getKeys(), recordDTO);
+        //MapType PersonRecordType = DataTypes.createMapType(recordDTO.getKeyFields(), recordDTO);
 
         // Because we are in Java, not Scala, we have to create the UDF in a bit annoying way, c.f.
         // c.f. http://stackoverflow.com/questions/36248206/creating-a-sparksql-udf-in-java-outside-of-sqlcontext

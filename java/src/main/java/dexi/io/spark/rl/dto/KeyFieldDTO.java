@@ -18,19 +18,10 @@ public class KeyFieldDTO extends FieldDTO {
     private Map<String, Set<DataCleaningMethod>> availableDataCleaningMethods;
     private Map<String, Set<DataCleaningMethod>> selectedDataCleaningMethods;
 
-    public KeyFieldDTO(String name, String dataType, Object value) {
-        super(name, dataType, value);
+    public KeyFieldDTO(String name, DataType dataType) {
+        super(name, dataType);
         this.availableComparisonMethods = ComparisonMethodFactory.getComparisonMethods();
         this.availableDataCleaningMethods = DataCleaningMethodFactory.getDataCleaningMethods();
     }
 
-    @Override
-    public int defaultSize() {
-        return 0;
-    }
-
-    @Override
-    public DataType asNullable() {
-        return null;
-    }
 }

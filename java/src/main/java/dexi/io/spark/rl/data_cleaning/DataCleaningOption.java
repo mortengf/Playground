@@ -1,6 +1,8 @@
 package dexi.io.spark.rl.data_cleaning;
 
-public class DataCleaningOption {
+import java.io.Serializable;
+
+public class DataCleaningOption implements Serializable {
     private String options;
 
     public DataCleaningOption(String options) {

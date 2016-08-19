@@ -1,8 +1,9 @@
 package dexi.io.spark.rl.comparison.method;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class ComparisonMethodFactory {
+public class ComparisonMethodFactory implements Serializable {
     private static Map<String, Set<ComparisonMethod>> comparisonMethodMap;
 
     static {
