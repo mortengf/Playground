@@ -215,16 +215,16 @@ public class SparkRecordLinkageFun {
         JavaPairRDD<KeyDTO, ValueDTO> uncoolPeoplePairRDD = uncoolPeopleRDD.mapToPair(peoplePairFunction);
 
         // TODO: use coolPeoplePairRDD#reduceByKey/aggregateByKey/etc. to perform pairing?
-        coolPeoplePairRDD.groupByKey();
-        uncoolPeoplePairRDD.groupByKey();
+        JavaPairRDD<KeyDTO, Iterable<ValueDTO>> coolPeoplePairGroupedRDD = coolPeoplePairRDD.groupByKey();
+        JavaPairRDD<KeyDTO, Iterable<ValueDTO>> uncoolPeoplePairGroupedRDD = uncoolPeoplePairRDD.groupByKey();
 
-        List<Tuple2<KeyDTO, ValueDTO>> coolPeoplePairsCollected = coolPeoplePairRDD.collect();
-        for (Tuple2<KeyDTO, ValueDTO> tuple : coolPeoplePairsCollected) {
-            System.out.println(tuple);
+        List<Tuple2<KeyDTO, Iterable<ValueDTO>>> coolPeoplePairGroupedCollected = coolPeoplePairGroupedRDD.collect();
+        for (Tuple2<KeyDTO, Iterable<ValueDTO>> tuple : coolPeoplePairGroupedCollected) {
+            System.out.println("Cool, collected person: " + tuple);
         }
-        List<Tuple2<KeyDTO, ValueDTO>> uncoolPeoplePairsCollected = uncoolPeoplePairRDD.collect();
-        for (Tuple2<KeyDTO, ValueDTO> tuple : uncoolPeoplePairsCollected) {
-            System.out.println(tuple);
+        List<Tuple2<KeyDTO, Iterable<ValueDTO>>> uncoolPeoplePairsCollected = uncoolPeoplePairGroupedRDD.collect();
+        for (Tuple2<KeyDTO, Iterable<ValueDTO>> tuple : uncoolPeoplePairsCollected) {
+            System.out.println("Uncool, collected person: " + tuple);
         }
 
         System.out.println("Key-Valuing (pairing) done");
