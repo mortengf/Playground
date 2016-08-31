@@ -25,13 +25,16 @@ import java.util.List;
 /**
  Perform Record Linkage (RL) (using statically-defined (key/value) config) that matches:
  <ul>
- <li>Multiple "Elon Musk"s within the same data set.</li>
- <li>Main feature: "Cool" Sam Harris with "uncool" Sam Harris even though their age is different, ie. use the
+ <li>"Cool" Sam Harris with "uncool" Sam Harris even though their age is different, ie. use the
  "selected comparison methods" and weights defined on the KeyFieldDTOs.</li>
+ <li>Multiple "Elon Musk"s within the same data set.</li>
  </ul>
 
  TODO: support the "selected comparison methods" and weights. Which Spark data structure and transformation
- supports such a JOIN with custom logic? Can we avoid a cartesian product (using "ds.join(otherDS)")?
+ supports such a JOIN with custom logic? Can we avoid a cartesian product (using "rdd.join(otherRDD)")?
+        - Use RDD.cogroup()?
+        - Call data comparison/cleaning methods from equals() of DTO classes? If we do that, we won't be able to
+ implement something like "how many percent"-ish values match, because equals() returns boolean
 */
 public class SparkRecordLinkageFun {
 
