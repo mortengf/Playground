@@ -24,4 +24,9 @@ public class KeyFieldDTO extends FieldDTO {
         this.availableDataCleaningMethods = DataCleaningMethodFactory.getDataCleaningMethods();
     }
 
+    @Override
+    public String toString() {
+        // TODO: include key-specific fields when we start using them
+        return super.toString();
+    }
 }

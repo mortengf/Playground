@@ -22,4 +22,26 @@ public class KeyDTO implements Serializable {
     public void setKeyFields(Set<KeyFieldDTO> keyFields) {
         this.keyFields = keyFields;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        KeyDTO keyDTO = (KeyDTO) o;
+
+        return keyFields.equals(keyDTO.keyFields);
+    }
+
+    @Override
+    public int hashCode() {
+        return keyFields.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "KeyDTO{" +
+                "keyFields=" + keyFields +
+                '}';
+    }
 }

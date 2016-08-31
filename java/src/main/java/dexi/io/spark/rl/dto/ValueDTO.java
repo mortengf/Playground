@@ -19,4 +19,25 @@ public class ValueDTO implements Serializable {
         this.valueFields.add(valueField);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ValueDTO valueDTO = (ValueDTO) o;
+
+        return valueFields.equals(valueDTO.valueFields);
+    }
+
+    @Override
+    public int hashCode() {
+        return valueFields.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "ValueDTO{" +
+                "valueFields=" + valueFields +
+                '}';
+    }
 }

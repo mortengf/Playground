@@ -12,22 +12,18 @@ import java.util.Set;
 public class RLConfig implements Serializable {
     private Set<KeyFieldDTO> keyFields;
     private Set<FieldDTO> valueFields;
-    private Set<FieldDTO> allFields;
 
     public RLConfig() {
         this.keyFields = new HashSet<KeyFieldDTO>();
         this.valueFields = new HashSet<FieldDTO>();
-        this.allFields = new HashSet<FieldDTO>();
     }
 
     public void addKeyField(KeyFieldDTO keyField) {
         this.keyFields.add(keyField);
-        this.allFields.add(keyField);
     }
 
     public void addValueField(FieldDTO valueField) {
         this.valueFields.add(valueField);
-        this.allFields.add(valueField);
     }
 
     public boolean containsKeyField(String name, DataType dataType) {
@@ -62,7 +58,4 @@ public class RLConfig implements Serializable {
         return valueFields;
     }
 
-    public Set<FieldDTO> getAllFields() {
-        return allFields;
-    }
 }

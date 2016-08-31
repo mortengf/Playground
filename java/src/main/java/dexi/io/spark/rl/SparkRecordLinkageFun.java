@@ -102,8 +102,18 @@ public class SparkRecordLinkageFun {
                 (Encoders.bean(Person.class));
         */
 
+        VoidFunction<Row> printPeopleRow = new VoidFunction<Row>() {
+            public void call(Row row) throws Exception {
+                System.out.println(row);
+            }
+        };
+
         JavaRDD<Row> coolPeopleRDD = coolPeopleDataset.toJavaRDD();
+        System.out.println("Cool people...");
+        coolPeopleRDD.foreach(printPeopleRow);
         JavaRDD<Row> uncoolPeopleRDD = uncoolPeopleDataset.toJavaRDD();
+        System.out.println("Uncool people...");
+        uncoolPeopleRDD.foreach(printPeopleRow);
 
         /* TODO:
 
@@ -129,18 +139,15 @@ public class SparkRecordLinkageFun {
                 coolPeopleDataset.groupByKey(defineKeyAndValues, null);// TODO: define Encoder how?
         */
 
-        StructType schema = coolPeopleDataset.schema();
-        coolPeopleDataset.printSchema();
+        // TODO: can we use Spark's internal schema for our RL config?
+        //StructType schema = coolPeopleDataset.schema();
+        //coolPeopleDataset.printSchema();
 
         // Cartesian product
         System.out.println("Performing Cartesian product...");
         Dataset<Row> cartesianProduct = coolPeopleDataset.join(uncoolPeopleDataset);
         JavaRDD<Row> cartesianProductRDD = cartesianProduct.toJavaRDD();
-        cartesianProductRDD.foreach(new VoidFunction<Row>() {
-            public void call(Row row) throws Exception {
-                System.out.println(row);
-            }
-        });
+        cartesianProductRDD.foreach(printPeopleRow);
         System.out.println("Cartesian product done");
 
         // RL: JOIN with pairs
@@ -165,7 +172,7 @@ public class SparkRecordLinkageFun {
                 StructField[] fields = ((StructType) seq).fields();
 
                 if (fields.length != numberOfRLConfigFields) {
-                    throw new IllegalArgumentException("Fields of row does not match RL Config");
+                    throw new IllegalArgumentException("#Fields of row does not match #fields RL Config");
                 }
 
                 KeyDTO keyDTO = new KeyDTO();
@@ -191,17 +198,30 @@ public class SparkRecordLinkageFun {
                     } else {
                         System.err.println("ERROR: field " + name + " is not defined in RL config as neither key " +
                                 "or value field");
+                        // TODO: stop execution?
                         continue;
                     }
                 }
 
-                // TODO: change output to be Tuple2<KeyDTO, ValueDTO>
-                return new Tuple2<KeyDTO, ValueDTO>(keyDTO, valueDTO);
+                Tuple2<KeyDTO, ValueDTO> tuple = new Tuple2<KeyDTO, ValueDTO>(keyDTO, valueDTO);
+                return tuple;
             }
         };
 
         JavaPairRDD<KeyDTO, ValueDTO> coolPeoplePairRDD = coolPeopleRDD.mapToPair(peoplePairFunction);
         JavaPairRDD<KeyDTO, ValueDTO> uncoolPeoplePairRDD = uncoolPeopleRDD.mapToPair(peoplePairFunction);
+
+        // TODO: use coolPeoplePairRDD#reduceByKey/aggregateByKey/etc. to perform pairing?
+
+        VoidFunction<Tuple2<KeyDTO, ValueDTO>> printJavaPairRDD = new VoidFunction<Tuple2<KeyDTO, ValueDTO>>() {
+            public void call(Tuple2<KeyDTO, ValueDTO> tuple) throws Exception {
+                System.out.println(tuple);
+            }
+        };
+
+        coolPeoplePairRDD.foreach(printJavaPairRDD);
+        uncoolPeoplePairRDD.foreach(printJavaPairRDD);
+
         System.out.println("Key-Valuing (pairing) done");
 
         System.out.println("Performing RL...");
