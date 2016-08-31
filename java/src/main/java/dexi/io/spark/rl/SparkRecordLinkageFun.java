@@ -37,9 +37,10 @@ public class SparkRecordLinkageFun {
 
     public static void main(String[] args) {
         SparkConf conf = new SparkConf().setAppName("Spark RL Fun").setMaster("local");
+
+        // A (Java)SparkContext must be instantiated even though the object is never used - otherwise the program
+        // will throw a "SparkException: A master URL must be set in your configuration"
         JavaSparkContext sc = new JavaSparkContext(conf);
-        //SQLContext sqlContext = new SQLContext(sc); // TODO: not needed after all? I though we got an error when
-        // leaving it out? Which error?
         SparkSession session = SparkSession.builder().getOrCreate();
         Dataset<Row> coolPeopleDataset = session.read().json("src/main/resources/spark/rl/cool_people.json");
         Dataset<Row> uncoolPeopleDataset = session.read().json("src/main/resources/spark/rl/uncool_people.json");
