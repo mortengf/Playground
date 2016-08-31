@@ -21,6 +21,8 @@ import org.apache.spark.sql.types.StructType;
 import scala.Tuple2;
 import scala.collection.Seq;
 
+import java.util.List;
+
 public class SparkRecordLinkageFun {
 
     /*
@@ -126,7 +128,8 @@ public class SparkRecordLinkageFun {
                 2. Which Spark data type to use: RDD or Dataset? Does a partition in an RDD represent a "group"/"block"
                 with common keys - or is a partition purely an internal thing for controlling the number of tasks to
                 parallelize operations in?
-                    A: seems to be the ladder based on e.g. http://spark.apache.org/docs/latest/programming-guide.html#parallelized-collections
+                    A: seems to be the latter based on e.g. http://spark.apache.org/docs/latest/programming-guide
+                    .html#parallelized-collections
                 3. How do we "load" the Dataset objects into the DTO classes (RL conf) such that we can define which
              keys to JOIN on and which comparison methods to use?
                 4. Which Spark data structure and transformation supports such a JOIN with custom logic? Can we avoid a
@@ -212,15 +215,17 @@ public class SparkRecordLinkageFun {
         JavaPairRDD<KeyDTO, ValueDTO> uncoolPeoplePairRDD = uncoolPeopleRDD.mapToPair(peoplePairFunction);
 
         // TODO: use coolPeoplePairRDD#reduceByKey/aggregateByKey/etc. to perform pairing?
+        coolPeoplePairRDD.groupByKey();
+        uncoolPeoplePairRDD.groupByKey();
 
-        VoidFunction<Tuple2<KeyDTO, ValueDTO>> printJavaPairRDD = new VoidFunction<Tuple2<KeyDTO, ValueDTO>>() {
-            public void call(Tuple2<KeyDTO, ValueDTO> tuple) throws Exception {
-                System.out.println(tuple);
-            }
-        };
-
-        coolPeoplePairRDD.foreach(printJavaPairRDD);
-        uncoolPeoplePairRDD.foreach(printJavaPairRDD);
+        List<Tuple2<KeyDTO, ValueDTO>> coolPeoplePairsCollected = coolPeoplePairRDD.collect();
+        for (Tuple2<KeyDTO, ValueDTO> tuple : coolPeoplePairsCollected) {
+            System.out.println(tuple);
+        }
+        List<Tuple2<KeyDTO, ValueDTO>> uncoolPeoplePairsCollected = uncoolPeoplePairRDD.collect();
+        for (Tuple2<KeyDTO, ValueDTO> tuple : uncoolPeoplePairsCollected) {
+            System.out.println(tuple);
+        }
 
         System.out.println("Key-Valuing (pairing) done");
 
