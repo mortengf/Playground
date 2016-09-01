@@ -1,4 +1,4 @@
-package dexi.io.spark.rl.data_cleaning;
+package playground.spark.rl.data_cleaning;
 
 public class RemoveSeparators extends DataCleaningMethod {
 

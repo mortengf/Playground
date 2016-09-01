@@ -1,6 +1,6 @@
-package dexi.io.spark.rl.comparison.method;
+package playground.spark.rl.comparison.method;
 
-import dexi.io.spark.rl.comparison.option.ComparisonOption;
+import playground.spark.rl.comparison.option.ComparisonOption;
 
 public class RangeComparisonMethod extends ComparisonMethod {
 

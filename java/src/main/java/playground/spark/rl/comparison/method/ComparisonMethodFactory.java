@@ -1,4 +1,4 @@
-package dexi.io.spark.rl.comparison.method;
+package playground.spark.rl.comparison.method;
 
 import java.io.Serializable;
 import java.util.*;

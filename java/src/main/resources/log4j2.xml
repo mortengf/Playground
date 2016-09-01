@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration monitorInterval="30" status="warn" packages="org.apache.logging.log4j.core, com.cloudscrape.logging">
+<configuration monitorInterval="30" status="warn" packages="org.apache.logging.log4j.core, playground.logging">
     <appenders>
         <Console name="console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%p] %c - [%t] %msg%n"/>
@@ -25,18 +25,6 @@
         </logger>
 
         <logger name="org.postgresql" level="info" additivity="false">
-            <appender-ref ref="console" />
-        </logger>
-
-        <logger name="com.cloudscrape" level="debug" additivity="false">
-            <appender-ref ref="console" />
-        </logger>
-
-        <logger name="io.dexi" level="debug" additivity="false">
-            <appender-ref ref="console" />
-        </logger>
-
-        <logger name="com.vonhof" level="debug" additivity="false">
             <appender-ref ref="console" />
         </logger>
 

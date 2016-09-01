@@ -1,4 +1,4 @@
-package io.dexi.logging;
+package playground.logging;
 
 /**
  * Created by skyfer on 09/05/16.

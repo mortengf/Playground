@@ -1,7 +1,7 @@
-package dexi.io.spark.rl;
+package playground.spark.rl;
 
-import dexi.io.spark.rl.dto.FieldDTO;
-import dexi.io.spark.rl.dto.KeyFieldDTO;
+import playground.spark.rl.dto.FieldDTO;
+import playground.spark.rl.dto.KeyFieldDTO;
 import org.apache.spark.sql.types.DataType;
 
 import java.io.Serializable;

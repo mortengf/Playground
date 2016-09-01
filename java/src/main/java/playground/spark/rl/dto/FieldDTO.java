@@ -1,4 +1,4 @@
-package dexi.io.spark.rl.dto;
+package playground.spark.rl.dto;
 
 import org.apache.spark.sql.types.DataType;
 

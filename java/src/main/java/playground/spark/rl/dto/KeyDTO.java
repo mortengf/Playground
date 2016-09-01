@@ -1,4 +1,4 @@
-package dexi.io.spark.rl.dto;
+package playground.spark.rl.dto;
 
 import java.io.Serializable;
 import java.util.HashSet;

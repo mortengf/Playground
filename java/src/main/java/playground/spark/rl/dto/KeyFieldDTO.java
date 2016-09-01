@@ -1,9 +1,9 @@
-package dexi.io.spark.rl.dto;
+package playground.spark.rl.dto;
 
-import dexi.io.spark.rl.comparison.method.ComparisonMethod;
-import dexi.io.spark.rl.comparison.method.ComparisonMethodFactory;
-import dexi.io.spark.rl.data_cleaning.DataCleaningMethod;
-import dexi.io.spark.rl.data_cleaning.DataCleaningMethodFactory;
+import playground.spark.rl.comparison.method.ComparisonMethod;
+import playground.spark.rl.comparison.method.ComparisonMethodFactory;
+import playground.spark.rl.data_cleaning.DataCleaningMethod;
+import playground.spark.rl.data_cleaning.DataCleaningMethodFactory;
 import org.apache.spark.sql.types.DataType;
 
 import java.util.Map;

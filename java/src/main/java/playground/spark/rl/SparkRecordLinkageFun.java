@@ -1,10 +1,11 @@
-package dexi.io.spark.rl;
+package playground.spark.rl;
 
-import dexi.io.spark.rl.dto.FieldDTO;
-import dexi.io.spark.rl.dto.KeyDTO;
-import dexi.io.spark.rl.dto.KeyFieldDTO;
-import dexi.io.spark.rl.dto.ValueDTO;
+import playground.spark.rl.dto.FieldDTO;
+import playground.spark.rl.dto.KeyDTO;
+import playground.spark.rl.dto.KeyFieldDTO;
+import playground.spark.rl.dto.ValueDTO;
 import org.apache.spark.SparkConf;
+//import org.apache.spark.SparkContext;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
@@ -25,7 +26,7 @@ import java.util.List;
 /**
  Perform Record Linkage (RL) (using statically-defined (key/value) config) that matches:
  <ul>
- <li>"Cool" Sam Harris with "uncool" Sam Harris even though their age is different, ie. use the
+ <li>"Cool" "Sam Harris" with "uncool" "Sam Harris" even though their age is different, ie. use the
  "selected comparison methods" and weights defined on the KeyFieldDTOs.</li>
  <li>Multiple "Elon Musk"s within the same data set.</li>
  </ul>

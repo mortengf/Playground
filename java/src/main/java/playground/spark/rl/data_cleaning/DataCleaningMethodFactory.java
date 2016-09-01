@@ -1,6 +1,4 @@
-package dexi.io.spark.rl.data_cleaning;
-
-import dexi.io.spark.rl.comparison.method.ComparisonMethod;
+package playground.spark.rl.data_cleaning;
 
 import java.util.*;
 
