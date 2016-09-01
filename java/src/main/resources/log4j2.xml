@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration monitorInterval="30" status="warn" packages="org.apache.logging.log4j.core, playground.logging">
+<configuration monitorInterval="30" status="warn" packages="org.apache.logging.log4j.core, playground">
     <appenders>
         <Console name="console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%p] %c - [%t] %msg%n"/>
@@ -8,23 +8,7 @@
     </appenders>
 
     <loggers>
-        <logger name="org.eclipse" level="info" additivity="false">
-            <appender-ref ref="console" />
-        </logger>
-
-        <logger name="org.quartz" level="info" additivity="false">
-            <appender-ref ref="console" />
-        </logger>
-
-        <logger name="org.elasticsearch" level="info" additivity="false">
-            <appender-ref ref="console" />
-        </logger>
-
-        <logger name="com.mchange" level="info" additivity="false">
-            <appender-ref ref="console" />
-        </logger>
-
-        <logger name="org.postgresql" level="info" additivity="false">
+        <logger name="playground" level="info" additivity="false">
             <appender-ref ref="console" />
         </logger>
 
