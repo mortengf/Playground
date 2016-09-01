@@ -163,11 +163,11 @@ public class SparkRecordLinkageFun {
             }
         }, DataTypes.BooleanType);
 
-        Column[] keyColumns = { new Column("cool.firstName"), new Column("cool.lastName") };
+        Column[] keyColumns = { new Column("cool.firstName"), new Column("uncool.firstName") };
         Column joinExpression = functions.callUDF("personComparatorUDF", keyColumns);
 
         Dataset<Row> linkedPeople = coolPeopleDataset.as("cool").join(uncoolPeopleDataset.as("uncool"),
-                joinExpression, "outer");
+                joinExpression, "inner");
 
         List<Row> linkedAndCollectedPeople = linkedPeople.collectAsList();
         for (Row row : linkedAndCollectedPeople) {
