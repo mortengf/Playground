@@ -5,7 +5,6 @@ import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.PairFunction;
-import org.apache.spark.api.java.function.VoidFunction;
 import org.apache.spark.sql.*;
 import org.apache.spark.sql.api.java.UDF2;
 import org.apache.spark.sql.types.DataType;
@@ -36,127 +35,125 @@ import java.util.List;
  implement something like "how many percent"-ish values match, because equals() returns boolean
 */
 public class SparkRecordLinkageFun {
+    private static SparkSession session;
+    private static SQLContext sqlContext;
 
-    public static void main(String[] args) {
+    private static RLConfig rlConfig;
+    private static int numberOfRLConfigFields;
+
+    static {
         SparkConf conf = new SparkConf().setAppName("Spark RL Fun").setMaster("local");
 
         // A (Java)SparkContext must be instantiated even though the object is never used - otherwise the program
         // will throw a "SparkException: A master URL must be set in your configuration"
         JavaSparkContext sc = new JavaSparkContext(conf);
-        SQLContext sqlContext = new SQLContext(sc);
-        SparkSession session = SparkSession.builder().getOrCreate();
-        Dataset<Row> coolPeopleDataset = session.read().json("src/main/resources/spark/rl/cool_people.json");
-        Dataset<Row> uncoolPeopleDataset = session.read().json("src/main/resources/spark/rl/uncool_people.json");
+        sqlContext = new SQLContext(sc);
+        session = SparkSession.builder().getOrCreate();
+    }
 
-        VoidFunction<Row> printPeopleRow = new VoidFunction<Row>() {
-            public void call(Row row) throws Exception {
-                System.out.println(row);
-            }
-        };
+    private static void printPeople(List<Row> people) {
+        for (Row person : people) {
+            System.out.println(person);
+        }
+    };
 
-        JavaRDD<Row> coolPeopleRDD = coolPeopleDataset.toJavaRDD();
-        System.out.println("Cool people...");
-        coolPeopleRDD.foreach(printPeopleRow);
-        JavaRDD<Row> uncoolPeopleRDD = uncoolPeopleDataset.toJavaRDD();
-        System.out.println("Uncool people...");
-        uncoolPeopleRDD.foreach(printPeopleRow);
-
-        // Cartesian product
-        System.out.println("Performing Cartesian product...");
-        Dataset<Row> cartesianProduct = coolPeopleDataset.join(uncoolPeopleDataset);
+    private static void doCartesianProduct(Dataset<Row> dataset1, Dataset<Row> dataset2) {
+        Dataset<Row> cartesianProduct = dataset1.join(dataset2);
         JavaRDD<Row> cartesianProductRDD = cartesianProduct.toJavaRDD();
-        cartesianProductRDD.foreach(printPeopleRow);
-        System.out.println("Cartesian product done");
+        List<Row> cartesianProductCollected = cartesianProductRDD.collect();
+        System.out.println("Cartesian product:");
+        for (Row row : cartesianProductCollected) {
+            System.out.println(row);
+        }
+    }
 
-        // RL: JOIN with pairs
+    private static void initRLConfig() {
+        rlConfig = new RLConfig();
 
-        // Statically define RL config
         // TODO: this must be possible to define dynamically
-        final RLConfig rlConfig = new RLConfig();
-
         rlConfig.addKeyField(new KeyFieldDTO("firstName", DataTypes.StringType));
         rlConfig.addKeyField(new KeyFieldDTO("lastName", DataTypes.StringType));
 
         rlConfig.addValueField(new FieldDTO("age", DataTypes.LongType));
         rlConfig.addValueField(new FieldDTO("sex", DataTypes.StringType));
 
-        final int numberOfRLConfigFields = rlConfig.getKeyFields().size() + rlConfig.getValueFields().size();
+        numberOfRLConfigFields = rlConfig.getKeyFields().size() + rlConfig.getValueFields().size();
+    }
 
-        System.out.println("Key-Valuing (pairing) each data set...");
-        PairFunction<Row, KeyDTO, ValueDTO> peoplePairFunction = new PairFunction<Row, KeyDTO, ValueDTO>() {
-            public Tuple2<KeyDTO, ValueDTO> call(Row row) throws Exception {
-                StructType schema = row.schema();
-                Seq<StructField> seq = schema.seq();
-                StructField[] fields = ((StructType) seq).fields();
+    private static PairFunction<Row, KeyDTO, ValueDTO> peoplePairFunction = new PairFunction<Row, KeyDTO, ValueDTO>() {
+        public Tuple2<KeyDTO, ValueDTO> call(Row row) throws Exception {
+            StructType schema = row.schema();
+            Seq<StructField> seq = schema.seq();
+            StructField[] fields = ((StructType) seq).fields();
 
-                if (fields.length != numberOfRLConfigFields) {
-                    throw new IllegalArgumentException("#Fields of row does not match #fields RL Config");
-                }
-
-                KeyDTO keyDTO = new KeyDTO();
-                ValueDTO valueDTO = new ValueDTO();
-                for (StructField field : fields) {
-                    String name = field.name();
-                    DataType dataType = field.dataType();
-                    Object fieldValue = row.getAs(name); // TODO: this will throw IllegalArgumentException if field
-                    // with name does not exist => set value after checking if field exists in RL config - BUT this
-                    // requires to do the "is key/value?" check again?
-
-                    boolean isKeyField = rlConfig.containsKeyField(name, dataType);
-                    boolean isValueField = rlConfig.containsValueField(name, dataType);
-
-                    if (isKeyField) {
-                        KeyFieldDTO keyField = new KeyFieldDTO(name, dataType);
-                        keyField.setValue(fieldValue);
-                        keyDTO.addKeyField(keyField);
-                    } else if (isValueField) {
-                        FieldDTO valueField = new FieldDTO(name, dataType);
-                        valueField.setValue(fieldValue);
-                        valueDTO.addValueField(valueField);
-                    } else {
-                        System.err.println("ERROR: field " + name + " is not defined in RL config as neither key " +
-                                "or value field");
-                        // TODO: stop execution?
-                        continue;
-                    }
-                }
-
-                Tuple2<KeyDTO, ValueDTO> tuple = new Tuple2<KeyDTO, ValueDTO>(keyDTO, valueDTO);
-                return tuple;
+            if (fields.length != numberOfRLConfigFields) {
+                throw new IllegalArgumentException("#Fields of row does not match #fields RL Config");
             }
-        };
 
-        // Define what a "people pair" is, i.e. the key and value
+            KeyDTO keyDTO = new KeyDTO();
+            ValueDTO valueDTO = new ValueDTO();
+            for (StructField field : fields) {
+                String name = field.name();
+                DataType dataType = field.dataType();
+                Object fieldValue = row.getAs(name); // TODO: this will throw IllegalArgumentException if field
+                // with name does not exist => set value after checking if field exists in RL config - BUT this
+                // requires to do the "is key/value?" check again?
+
+                boolean isKeyField = rlConfig.containsKeyField(name, dataType);
+                boolean isValueField = rlConfig.containsValueField(name, dataType);
+
+                if (isKeyField) {
+                    KeyFieldDTO keyField = new KeyFieldDTO(name, dataType);
+                    keyField.setValue(fieldValue);
+                    keyDTO.addKeyField(keyField);
+                } else if (isValueField) {
+                    FieldDTO valueField = new FieldDTO(name, dataType);
+                    valueField.setValue(fieldValue);
+                    valueDTO.addValueField(valueField);
+                } else {
+                    System.err.println("ERROR: field " + name + " is not defined in RL config as neither key " +
+                            "or value field");
+                    // TODO: stop execution?
+                    continue;
+                }
+            }
+
+            Tuple2<KeyDTO, ValueDTO> tuple = new Tuple2<KeyDTO, ValueDTO>(keyDTO, valueDTO);
+            return tuple;
+        }
+    };
+
+    private static void doRLWithPairRDDs(JavaRDD<Row> coolPeopleRDD, JavaRDD<Row> uncoolPeopleRDD) {
         JavaPairRDD<KeyDTO, ValueDTO> coolPeoplePairRDD = coolPeopleRDD.mapToPair(peoplePairFunction);
-        JavaPairRDD<KeyDTO, ValueDTO> uncoolPeoplePairRDD = uncoolPeopleRDD.mapToPair(peoplePairFunction);
-
-        // Do the actual pairing/grouping
         // TODO: use coolPeoplePairRDD#aggregateByKey/reduceByKey/etc. to perform grouping?
         JavaPairRDD<KeyDTO, Iterable<ValueDTO>> coolPeoplePairGroupedRDD = coolPeoplePairRDD.groupByKey();
-        JavaPairRDD<KeyDTO, Iterable<ValueDTO>> uncoolPeoplePairGroupedRDD = uncoolPeoplePairRDD.groupByKey();
-
-        // Collect the results before printing to ensure that all nodes have finished processing
         List<Tuple2<KeyDTO, Iterable<ValueDTO>>> coolPeoplePairGroupedCollected = coolPeoplePairGroupedRDD.collect();
+        System.out.println("Cool, paired, grouped and collected people:");
         for (Tuple2<KeyDTO, Iterable<ValueDTO>> tuple : coolPeoplePairGroupedCollected) {
-            System.out.println("Cool, collected person: " + tuple);
-        }
-        List<Tuple2<KeyDTO, Iterable<ValueDTO>>> uncoolPeoplePairsCollected = uncoolPeoplePairGroupedRDD.collect();
-        for (Tuple2<KeyDTO, Iterable<ValueDTO>> tuple : uncoolPeoplePairsCollected) {
-            System.out.println("Uncool, collected person: " + tuple);
+            System.out.println(tuple);
         }
 
-        System.out.println("Key-Valuing (pairing) done");
+        JavaPairRDD<KeyDTO, ValueDTO> uncoolPeoplePairRDD = uncoolPeopleRDD.mapToPair(peoplePairFunction);
+        // TODO: same as above
+        JavaPairRDD<KeyDTO, Iterable<ValueDTO>> uncoolPeoplePairGroupedRDD = uncoolPeoplePairRDD.groupByKey();
+        List<Tuple2<KeyDTO, Iterable<ValueDTO>>> uncoolPeoplePairGroupedCollected = uncoolPeoplePairGroupedRDD
+                .collect();
+        System.out.println("Uncool, paired, grouped and collected people:");
+        for (Tuple2<KeyDTO, Iterable<ValueDTO>> tuple : uncoolPeoplePairGroupedCollected) {
+            System.out.println(tuple);
+        }
 
-        System.out.println("Performing RL with PairRDDs...");
-        JavaPairRDD<KeyDTO, Tuple2<ValueDTO, ValueDTO>> joined = coolPeoplePairRDD.join(uncoolPeoplePairRDD);
-        joined.foreach(new VoidFunction<Tuple2<KeyDTO, Tuple2<ValueDTO, ValueDTO>>>() {
-            public void call(Tuple2<KeyDTO, Tuple2<ValueDTO, ValueDTO>> tuple) throws Exception {
-                System.out.println(tuple);
-            }
-        });
-        System.out.println("RL with PairRDDs done");
+        JavaPairRDD<KeyDTO, Tuple2<Iterable<ValueDTO>, Iterable<ValueDTO>>> joinedPeople = coolPeoplePairGroupedRDD.join
+                (uncoolPeoplePairGroupedRDD);
+        List<Tuple2<KeyDTO, Tuple2<Iterable<ValueDTO>, Iterable<ValueDTO>>>> joinedAndCollectedPeople = joinedPeople.collect();
+        System.out.println("RLed/JOINed people - with PairRDDs:");
+        for (Tuple2<KeyDTO, Tuple2<Iterable<ValueDTO>, Iterable<ValueDTO>>> tuple : joinedAndCollectedPeople) {
+            System.out.println(tuple);
+        }
 
-        System.out.println("Performing RL with Datasets + UDF...");
+    }
+
+    private static void doRLWithDatasetsAndUDF(Dataset<Row> coolPeopleDataset, Dataset<Row> uncoolPeopleDataset) {
         sqlContext.udf().register("personComparatorUDF", new UDF2<String, String, Boolean>() {
             public Boolean call(String str1, String str2) {
                 return str1.equals(str2); // TODO: do actual comparison - of what exactly?
@@ -166,14 +163,39 @@ public class SparkRecordLinkageFun {
         Column[] keyColumns = { new Column("cool.firstName"), new Column("uncool.firstName") };
         Column joinExpression = functions.callUDF("personComparatorUDF", keyColumns);
 
-        Dataset<Row> linkedPeople = coolPeopleDataset.as("cool").join(uncoolPeopleDataset.as("uncool"),
+        Dataset<Row> joinedPeople = coolPeopleDataset.as("cool").join(uncoolPeopleDataset.as("uncool"),
                 joinExpression, "inner");
 
-        List<Row> linkedAndCollectedPeople = linkedPeople.collectAsList();
-        for (Row row : linkedAndCollectedPeople) {
+        List<Row> joinedAndCollectedPeople = joinedPeople.collectAsList();
+        System.out.println("RLed/JOINed people - with Datasets + UDF:");
+        for (Row row : joinedAndCollectedPeople) {
             System.out.println(row);
         }
-        System.out.println("RL with Datasets + UDF done");
+    }
+
+    public static void main(String[] args) {
+        // JSON -> Datasets
+        Dataset<Row> coolPeopleDataset = session.read().json("src/main/resources/spark/rl/cool_people.json");
+        Dataset<Row> uncoolPeopleDataset = session.read().json("src/main/resources/spark/rl/uncool_people.json");
+
+        // Datasets -> RDDs
+        JavaRDD<Row> coolPeopleRDD = coolPeopleDataset.toJavaRDD();
+        List<Row> coolPeopleCollected = coolPeopleRDD.collect();
+        System.out.println("Cool, collected people:");
+        printPeople(coolPeopleCollected);
+
+        JavaRDD<Row> uncoolPeopleRDD = uncoolPeopleDataset.toJavaRDD();
+        List<Row> uncoolPeopleCollected = uncoolPeopleRDD.collect();
+        System.out.println("Uncool, collected people:");
+        printPeople(uncoolPeopleCollected);
+
+        doCartesianProduct(coolPeopleDataset, uncoolPeopleDataset);
+
+        initRLConfig();
+
+        doRLWithPairRDDs(coolPeopleRDD, uncoolPeopleRDD);
+
+        doRLWithDatasetsAndUDF(coolPeopleDataset, uncoolPeopleDataset);
 
     }
 
