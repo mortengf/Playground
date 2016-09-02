@@ -6,7 +6,7 @@ public class DataCleaningMethodFactory {
     private static Map<String, Set<DataCleaningMethod>> dataCleaningMethodMap;
 
     static {
-        // TODO: should data cleaning take place BEFORE actual record linkage? If so, remove ALL data
+        // TODO: should data cleaning take place BEFORE actual JOIN? If so, remove ALL data
         // cleaning-related code
         dataCleaningMethodMap = new HashMap<String, Set<DataCleaningMethod>>();
 
