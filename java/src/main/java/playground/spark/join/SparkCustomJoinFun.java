@@ -9,6 +9,7 @@ import org.apache.spark.api.java.function.ForeachFunction;
 import org.apache.spark.api.java.function.PairFunction;
 import org.apache.spark.sql.*;
 import org.apache.spark.sql.api.java.UDF2;
+import org.apache.spark.sql.api.java.UDF8;
 import org.apache.spark.sql.types.DataType;
 import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.StructField;
@@ -35,6 +36,19 @@ import java.util.List;
  * "selected comparison methods" and weights defined on the KeyFieldDTOs.</li>
  * <li>Multiple "Elon Musk"s within the same data set.</li>
  * </ul>
+ *
+ * Corresponding SQL would be something like:
+ *
+ * <pre>
+ *  SELECT  *
+ *  FROM    cool c
+ *  JOIN    uncool uc
+ *  ON      c.firstName = uc.firstName AND
+ *          c.lastName = uc.lastName AND
+ *          diff(c.age, uc.age) < 3 AND
+ *          c.sex = uc.sex;
+ *
+ * </pre>
  *
  * Use a statically-defined config.
 */
@@ -82,16 +96,6 @@ public class SparkCustomJoinFun {
         joinConfig.addValueField(new FieldDTO("sex", DataTypes.StringType));
 
         numberOfJoinConfigFields = joinConfig.getKeyFields().size() + joinConfig.getValueFields().size();
-    }
-
-    private static void initUDFConfig() {
-        // TODO: how would this work with a dynamic number of attributes in the JOIN key? Use reflection to load the
-        // appropriate UDF<X> class? Only up to 9 attributes are supported: is that ok?
-        sqlContext.udf().register("simplePersonComparatorUDF", new UDF2<String, String, Boolean>() {
-            public Boolean call(String str1, String str2) {
-                return str1.equals(str2); // TODO: do actual comparison - of what exactly?
-            }
-        }, DataTypes.BooleanType);
     }
 
     private static PairFunction<Row, KeyDTO, ValueDTO> peoplePairFunction = new PairFunction<Row, KeyDTO, ValueDTO>() {
@@ -167,21 +171,6 @@ public class SparkCustomJoinFun {
 
     }
 
-    private static void doJoinWithDatasetsAndUDF(Dataset<Row> coolPeopleDataset, Dataset<Row> uncoolPeopleDataset) {
-        Column[] keyColumns = { new Column("cool.firstName"), new Column("uncool.firstName") };
-        Column joinExpression = functions.callUDF("simplePersonComparatorUDF", keyColumns);
-
-        // Use aliases to avoid "ambiguous column name" error
-        Dataset<Row> joinedPeople = coolPeopleDataset.as("cool").join(uncoolPeopleDataset.as("uncool"),
-                joinExpression, "inner");
-
-        List<Row> joinedAndCollectedPeople = joinedPeople.collectAsList();
-        System.out.println("JOINed people - with Datasets + UDF:");
-        for (Row row : joinedAndCollectedPeople) {
-            System.out.println(row);
-        }
-    }
-
     private static boolean fuzzyComparePeople(Row person1, Row person2) {
         // TODO: do some complicated, fuzzy matching logic, e.g. use Elasticsearch to calculate a Levenshtein distance
         boolean matchesUsingFuzzyLogic = false;
@@ -224,12 +213,68 @@ public class SparkCustomJoinFun {
         }
     }
 
+    private static void doJoinWithDatasetsAndSimpleUDF(Dataset<Row> coolPeopleDataset, Dataset<Row> uncoolPeopleDataset) {
+        // TODO: how would this work with a dynamic number of attributes in the JOIN key? Use reflection to load the
+        // appropriate UDF<X> class? Only up to 9 attributes are supported: is that ok?
+        sqlContext.udf().register("simplePersonComparatorUDF", new UDF2<String, String, Boolean>() {
+            public Boolean call(String str1, String str2) {
+                return str1.equals(str2); // TODO: do actual comparison - of what exactly?
+            }
+        }, DataTypes.BooleanType);
+
+        Column[] keyColumns = { new Column("cool.firstName"), new Column("uncool.firstName") };
+        Column joinExpression = functions.callUDF("simplePersonComparatorUDF", keyColumns);
+
+        // Use aliases to avoid "ambiguous column name" error
+        Dataset<Row> joinedPeople = coolPeopleDataset.as("cool").join(uncoolPeopleDataset.as("uncool"),
+                joinExpression, "inner");
+
+        List<Row> joinedAndCollectedPeople = joinedPeople.collectAsList();
+        System.out.println("JOINed people - with Datasets + simple UDF:");
+        for (Row row : joinedAndCollectedPeople) {
+            System.out.println(row);
+        }
+    }
+
+    private static void doJoinWithDatasetsAndColumnCondition(Dataset<Row> coolPeopleDataset, final Dataset<Row> uncoolPeopleDataset) {
+        sqlContext.udf().register("advancedPersonComparatorUDF", new UDF8<String, String, String, String, Long,
+                Long, String, String, Boolean>() {
+            public Boolean call(String coolFirstName, String uncoolFirstName, String coolLastName, String
+                    uncoolLastName, Long coolAge, Long uncoolAge, String coolSex, String uncoolSex) throws Exception {
+                boolean firstNamesMatch = coolFirstName.equals(uncoolFirstName);
+                boolean lastNamesMatch = coolLastName.equals(uncoolLastName);
+                boolean agesMatch = Math.abs(coolAge - uncoolAge) <= 3;
+                boolean sexesMatch = coolSex.equals(uncoolSex);
+
+                return firstNamesMatch && lastNamesMatch && agesMatch && sexesMatch;
+            }
+        }, DataTypes.BooleanType);
+
+        Column[] keyColumns = {
+                new Column("cool.firstName"), new Column("uncool.firstName"),
+                new Column("cool.lastName"), new Column("uncool.lastName"),
+                new Column("cool.age"), new Column("uncool.age"),
+                new Column("cool.sex"), new Column("uncool.sex")
+        };
+        Column joinExpression = functions.callUDF("advancedPersonComparatorUDF", keyColumns);
+
+        Dataset<Row> joinedPeople = coolPeopleDataset.as("cool").join(uncoolPeopleDataset.as("uncool"),
+                joinExpression, "outer");
+        List<Row> joinedAndCollectedPeople = joinedPeople.collectAsList();
+        System.out.println("JOINed people - with Datasets + column condition:");
+        for (Row row : joinedAndCollectedPeople) {
+            System.out.println(row);
+        }
+
+    }
+
     public static void main(String[] args) {
         // JSON -> Datasets
         Dataset<Row> coolPeopleDataset = session.read().json("src/main/resources/spark/join/cool_people.json");
         Dataset<Row> uncoolPeopleDataset = session.read().json("src/main/resources/spark/join/uncool_people.json");
 
         // Datasets -> RDDs
+        /*
         JavaRDD<Row> coolPeopleRDD = coolPeopleDataset.toJavaRDD();
         List<Row> coolPeopleCollected = coolPeopleRDD.collect();
         System.out.println("Cool, collected people:");
@@ -239,18 +284,19 @@ public class SparkCustomJoinFun {
         List<Row> uncoolPeopleCollected = uncoolPeopleRDD.collect();
         System.out.println("Uncool, collected people:");
         printPeople(uncoolPeopleCollected);
+        */
 
-        doCartesianProduct(coolPeopleDataset, uncoolPeopleDataset);
+        //doCartesianProduct(coolPeopleDataset, uncoolPeopleDataset);
 
-        initJoinConfig();
+        //initJoinConfig();
 
-        doJoinWithPairRDDs(coolPeopleRDD, uncoolPeopleRDD);
-
-        initUDFConfig();
-
-        doJoinWithDatasetsAndUDF(coolPeopleDataset, uncoolPeopleDataset);
+        //doJoinWithPairRDDs(coolPeopleRDD, uncoolPeopleRDD);
 
         //doJoinWithRawDatasets(coolPeopleDataset, uncoolPeopleDataset);
+
+        //doJoinWithDatasetsAndSimpleUDF(coolPeopleDataset, uncoolPeopleDataset);
+
+        doJoinWithDatasetsAndColumnCondition(coolPeopleDataset, uncoolPeopleDataset);
 
     }
 
