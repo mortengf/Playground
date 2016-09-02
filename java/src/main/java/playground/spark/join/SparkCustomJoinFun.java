@@ -87,7 +87,7 @@ public class SparkCustomJoinFun {
     private static void initUDFConfig() {
         // TODO: how would this work with a dynamic number of attributes in the JOIN key? Use reflection to load the
         // appropriate UDF<X> class? Only up to 9 attributes are supported: is that ok?
-        sqlContext.udf().register("personComparatorUDF", new UDF2<String, String, Boolean>() {
+        sqlContext.udf().register("simplePersonComparatorUDF", new UDF2<String, String, Boolean>() {
             public Boolean call(String str1, String str2) {
                 return str1.equals(str2); // TODO: do actual comparison - of what exactly?
             }
@@ -169,7 +169,7 @@ public class SparkCustomJoinFun {
 
     private static void doJoinWithDatasetsAndUDF(Dataset<Row> coolPeopleDataset, Dataset<Row> uncoolPeopleDataset) {
         Column[] keyColumns = { new Column("cool.firstName"), new Column("uncool.firstName") };
-        Column joinExpression = functions.callUDF("personComparatorUDF", keyColumns);
+        Column joinExpression = functions.callUDF("simplePersonComparatorUDF", keyColumns);
 
         // Use aliases to avoid "ambiguous column name" error
         Dataset<Row> joinedPeople = coolPeopleDataset.as("cool").join(uncoolPeopleDataset.as("uncool"),
@@ -250,7 +250,7 @@ public class SparkCustomJoinFun {
 
         doJoinWithDatasetsAndUDF(coolPeopleDataset, uncoolPeopleDataset);
 
-        doJoinWithRawDatasets(coolPeopleDataset, uncoolPeopleDataset);
+        //doJoinWithRawDatasets(coolPeopleDataset, uncoolPeopleDataset);
 
     }
 
