@@ -1,7 +1,7 @@
-package playground.spark.rl;
+package playground.spark.join;
 
-import playground.spark.rl.dto.FieldDTO;
-import playground.spark.rl.dto.KeyFieldDTO;
+import playground.spark.join.dto.FieldDTO;
+import playground.spark.join.dto.KeyFieldDTO;
 import org.apache.spark.sql.types.DataType;
 
 import java.io.Serializable;
@@ -9,11 +9,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 // TODO: use class scala.Tuple2 instead of this class?
-public class RLConfig implements Serializable {
+public class JoinConfig implements Serializable {
     private Set<KeyFieldDTO> keyFields;
     private Set<FieldDTO> valueFields;
 
-    public RLConfig() {
+    public JoinConfig() {
         this.keyFields = new HashSet<KeyFieldDTO>();
         this.valueFields = new HashSet<FieldDTO>();
     }

@@ -1,4 +1,4 @@
-package playground.spark.rl.comparison.option;
+package playground.spark.join.comparison.option;
 
 import java.io.Serializable;
 

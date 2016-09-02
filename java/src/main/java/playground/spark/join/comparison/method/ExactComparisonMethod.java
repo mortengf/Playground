@@ -1,4 +1,4 @@
-package playground.spark.rl.comparison.method;
+package playground.spark.join.comparison.method;
 
 public class ExactComparisonMethod extends ComparisonMethod {
 

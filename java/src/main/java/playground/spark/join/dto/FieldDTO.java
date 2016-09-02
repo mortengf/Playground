@@ -1,4 +1,4 @@
-package playground.spark.rl.dto;
+package playground.spark.join.dto;
 
 import org.apache.spark.sql.types.DataType;
 

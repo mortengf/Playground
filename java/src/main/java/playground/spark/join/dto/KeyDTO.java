@@ -1,4 +1,4 @@
-package playground.spark.rl.dto;
+package playground.spark.join.dto;
 
 import java.io.Serializable;
 import java.util.HashSet;

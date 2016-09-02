@@ -1,4 +1,4 @@
-package playground.spark.rl.data_cleaning;
+package playground.spark.join.data_cleaning;
 
 import java.io.Serializable;
 import java.util.List;

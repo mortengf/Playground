@@ -1,9 +1,9 @@
-package playground.spark.rl.dto;
+package playground.spark.join.dto;
 
-import playground.spark.rl.comparison.method.ComparisonMethod;
-import playground.spark.rl.comparison.method.ComparisonMethodFactory;
-import playground.spark.rl.data_cleaning.DataCleaningMethod;
-import playground.spark.rl.data_cleaning.DataCleaningMethodFactory;
+import playground.spark.join.comparison.method.ComparisonMethod;
+import playground.spark.join.comparison.method.ComparisonMethodFactory;
+import playground.spark.join.data_cleaning.DataCleaningMethod;
+import playground.spark.join.data_cleaning.DataCleaningMethodFactory;
 import org.apache.spark.sql.types.DataType;
 
 import java.util.Map;

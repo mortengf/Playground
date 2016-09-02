@@ -1,6 +1,6 @@
-package playground.spark.rl.comparison.method;
+package playground.spark.join.comparison.method;
 
-import playground.spark.rl.comparison.option.ComparisonOption;
+import playground.spark.join.comparison.option.ComparisonOption;
 
 import java.io.Serializable;
 import java.util.HashSet;

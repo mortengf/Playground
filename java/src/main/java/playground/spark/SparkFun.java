@@ -49,18 +49,6 @@ public class SparkFun {
             System.out.println("Collected: " + o);
         }
 
-        /*
-        JavaPairRDD<String, Integer> pairs = distFileLines.compare(new PairFunction<String, String, Integer>() {
-            public Tuple2 call(DataSetEntryDTO a, DataSetEntryDTO b) throws Exception {
-                if (RecordLinkageMagic.isSame(a, b)) {
-                    return RecordLinkageMagic.merge(a, b);
-                }
-
-                return null;
-            }
-        });
-        */
-
         JavaPairRDD<String, Integer> pairs = distFileLines.mapToPair(new PairFunction<String, String, Integer>() {
             public Tuple2 call(String s) throws Exception {
                 return new Tuple2(s, 1);
