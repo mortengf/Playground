@@ -194,10 +194,15 @@ public class SparkRecordLinkageFun {
             TODO: this is a BAD idea, right!?
 
             1. In a clustered/non-local environment, we cannot just make the inner ("uncool") and result data sets
-            final: we have to send it the inner data set as a broadcast variable to each node - but for big data sets
+            final: we have to send the inner data set as a broadcast variable to each node - but for big data sets
             this is not feasible, neither in terms of fitting it in memory or in terms of network traffic.
 
             2. Doing a "manual JOIN" this way does not allow Spark to use partitions, as it would with .join()?
+
+            See e.g.:
+            	- http://heather.miller.am/teaching/cs212/slides/week20.pdf, slide "Partitions"
+	            - http://blog.cloudera.com/blog/2015/03/how-to-tune-your-apache-spark-jobs-part-1/
+
          */
         coolPeopleDataset.foreach(new ForeachFunction<Row>() {
             public void call(final Row coolPerson) throws Exception {
