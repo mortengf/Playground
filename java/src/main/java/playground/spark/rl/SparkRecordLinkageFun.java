@@ -4,6 +4,8 @@ import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.api.java.function.FilterFunction;
+import org.apache.spark.api.java.function.ForeachFunction;
 import org.apache.spark.api.java.function.PairFunction;
 import org.apache.spark.sql.*;
 import org.apache.spark.sql.api.java.UDF2;
@@ -18,6 +20,7 @@ import playground.spark.rl.dto.ValueDTO;
 import scala.Tuple2;
 import scala.collection.Seq;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -78,6 +81,16 @@ public class SparkRecordLinkageFun {
         rlConfig.addValueField(new FieldDTO("sex", DataTypes.StringType));
 
         numberOfRLConfigFields = rlConfig.getKeyFields().size() + rlConfig.getValueFields().size();
+    }
+
+    private static void initUDFConfig() {
+        // TODO: how would this work with a dynamic number of attributes in the JOIN key? Use reflection to load the
+        // appropriate UDF<X> class? Only up to 9 attributes are supported: is that ok?
+        sqlContext.udf().register("personComparatorUDF", new UDF2<String, String, Boolean>() {
+            public Boolean call(String str1, String str2) {
+                return str1.equals(str2); // TODO: do actual comparison - of what exactly?
+            }
+        }, DataTypes.BooleanType);
     }
 
     private static PairFunction<Row, KeyDTO, ValueDTO> peoplePairFunction = new PairFunction<Row, KeyDTO, ValueDTO>() {
@@ -154,21 +167,53 @@ public class SparkRecordLinkageFun {
     }
 
     private static void doRLWithDatasetsAndUDF(Dataset<Row> coolPeopleDataset, Dataset<Row> uncoolPeopleDataset) {
-        sqlContext.udf().register("personComparatorUDF", new UDF2<String, String, Boolean>() {
-            public Boolean call(String str1, String str2) {
-                return str1.equals(str2); // TODO: do actual comparison - of what exactly?
-            }
-        }, DataTypes.BooleanType);
-
         Column[] keyColumns = { new Column("cool.firstName"), new Column("uncool.firstName") };
         Column joinExpression = functions.callUDF("personComparatorUDF", keyColumns);
 
+        // Use aliases to avoid "ambiguous column name" error
         Dataset<Row> joinedPeople = coolPeopleDataset.as("cool").join(uncoolPeopleDataset.as("uncool"),
                 joinExpression, "inner");
 
         List<Row> joinedAndCollectedPeople = joinedPeople.collectAsList();
         System.out.println("RLed/JOINed people - with Datasets + UDF:");
         for (Row row : joinedAndCollectedPeople) {
+            System.out.println(row);
+        }
+    }
+
+    private static boolean fuzzyComparePeople(Row person1, Row person2) {
+        // TODO: do some complicated, fuzzy matching logic, e.g. use Elasticsearch to calculate a Levenshtein distance
+        boolean matchesUsingFuzzyLogic = false;
+        return matchesUsingFuzzyLogic;
+    }
+
+    private static void doRLWithRawDatasets(Dataset<Row> coolPeopleDataset, final Dataset<Row> uncoolPeopleDataset) {
+        final List<Row> joinedPeopleDataset = new ArrayList<Row>();
+
+        /*
+            TODO: this is a BAD idea, right!?
+
+            1. In a clustered/non-local environment, we cannot just make the inner ("uncool") and result data sets
+            final: we have to send it the inner data set as a broadcast variable to each node - but for big data sets
+            this is not feasible, neither in terms of fitting it in memory or in terms of network traffic.
+
+            2. Doing a "manual JOIN" this way does not allow Spark to use partitions, as it would with .join()?
+         */
+        coolPeopleDataset.foreach(new ForeachFunction<Row>() {
+            public void call(final Row coolPerson) throws Exception {
+                // TODO: does not work: uncoolPeopleDataset is "Invalid tree; null:" (an NPE is thrown)!
+                Dataset<Row> uncoolPeopleFiltered = uncoolPeopleDataset.filter(new FilterFunction<Row>() {
+                    public boolean call(Row uncoolPerson) throws Exception {
+                        return fuzzyComparePeople(coolPerson, uncoolPerson);
+                    }
+                });
+
+                joinedPeopleDataset.addAll(uncoolPeopleFiltered.collectAsList());
+            }
+        });
+
+        System.out.println("RLed/JOINed people - with raw Datasets:");
+        for (Row row : joinedPeopleDataset) {
             System.out.println(row);
         }
     }
@@ -195,7 +240,11 @@ public class SparkRecordLinkageFun {
 
         doRLWithPairRDDs(coolPeopleRDD, uncoolPeopleRDD);
 
+        initUDFConfig();
+
         doRLWithDatasetsAndUDF(coolPeopleDataset, uncoolPeopleDataset);
+
+        doRLWithRawDatasets(coolPeopleDataset, uncoolPeopleDataset);
 
     }
 
