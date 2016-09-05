@@ -267,34 +267,10 @@ public class SparkCustomJoinFun {
                     2. INNER JOIN and add a "score" to each result row?
 
          */
-
-        /*
-        JavaRDD<Row> coolPeopleRDD = coolPeopleDataset.toJavaRDD();
-        JavaPairRDD<KeyDTO, ValueDTO> coolPeoplePairRDD = coolPeopleRDD.mapToPair(peoplePairFunction);
-        JavaPairRDD<KeyDTO, Iterable<ValueDTO>> coolPeoplePairGroupedRDD = coolPeoplePairRDD.groupByKey();
-
-        JavaRDD<Row> uncoolPeopleRDD = uncoolPeopleDataset.toJavaRDD();
-        JavaPairRDD<KeyDTO, ValueDTO> uncoolPeoplePairRDD = uncoolPeopleRDD.mapToPair(peoplePairFunction);
-        JavaPairRDD<KeyDTO, Iterable<ValueDTO>> uncoolPeoplePairGroupedRDD = uncoolPeoplePairRDD.groupByKey();
-        */
-
         Dataset<Row> joinedPeople = coolPeopleDataset.as("cool").join(uncoolPeopleDataset.as("uncool"),
                 joinExpression, "outer");
         List<Row> joinedAndCollectedPeople = joinedPeople.collectAsList();
-
-        /*
-        JavaRDD<Row> joinedPeopleRDD = joinedPeople.toJavaRDD();
-        JavaPairRDD<Object, Object> joinedPeoplePairRDD = joinedPeopleRDD.mapToPair(new PairFunction<Row, Object,
-                Object>() {
-            public Tuple2<Object, Object> call(Row row) throws Exception {
-               return new Tuple2<Object, Object>(row.get(0), row.get(1));
-            }
-        });
-        */
-
-        //List<Tuple2<Object, Object>> joinedPeoplePairedAndCollected = joinedPeoplePairRDD.collect();
         System.out.println("JOINed people - with Datasets + column condition:");
-        //for (Tuple2<Object, Object> tuple : joinedPeoplePairedAndCollected) {
         for (Row row : joinedAndCollectedPeople) {
             System.out.println(row);
         }
