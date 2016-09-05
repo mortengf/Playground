@@ -47,7 +47,6 @@ import java.util.List;
  *          c.lastName = uc.lastName AND
  *          diff(c.age, uc.age) < 3 AND
  *          c.sex = uc.sex;
- *
  * </pre>
  *
  * Use a statically-defined config.
@@ -243,7 +242,8 @@ public class SparkCustomJoinFun {
                     uncoolLastName, Long coolAge, Long uncoolAge, String coolSex, String uncoolSex) throws Exception {
                 boolean firstNamesMatch = coolFirstName.equals(uncoolFirstName);
                 boolean lastNamesMatch = coolLastName.equals(uncoolLastName);
-                boolean agesMatch = Math.abs(coolAge - uncoolAge) <= 3;
+                // Example of non-exact match - TODO: use fuzzy matching logic
+                boolean agesMatch = Math.abs(coolAge - uncoolAge) < 3;
                 boolean sexesMatch = coolSex.equals(uncoolSex);
 
                 return firstNamesMatch && lastNamesMatch && agesMatch && sexesMatch;
@@ -258,10 +258,43 @@ public class SparkCustomJoinFun {
         };
         Column joinExpression = functions.callUDF("advancedPersonComparatorUDF", keyColumns);
 
+        /*
+            TODO: "complete" JOIN, i.e. identify true (good) and false (less good) matches:
+                    1. FULL OUTER JOIN and filter out NULL results?
+                        To be able to know which NULL value comes from which source data set we must use PairRDDs
+                        ("isPresent()", cf. http://stackoverflow.com/questions/28338694/apache-spark-joins-example-with-java)
+                        But JOINs on PairRDDs do not support UDFs.
+                    2. INNER JOIN and add a "score" to each result row?
+
+         */
+
+        /*
+        JavaRDD<Row> coolPeopleRDD = coolPeopleDataset.toJavaRDD();
+        JavaPairRDD<KeyDTO, ValueDTO> coolPeoplePairRDD = coolPeopleRDD.mapToPair(peoplePairFunction);
+        JavaPairRDD<KeyDTO, Iterable<ValueDTO>> coolPeoplePairGroupedRDD = coolPeoplePairRDD.groupByKey();
+
+        JavaRDD<Row> uncoolPeopleRDD = uncoolPeopleDataset.toJavaRDD();
+        JavaPairRDD<KeyDTO, ValueDTO> uncoolPeoplePairRDD = uncoolPeopleRDD.mapToPair(peoplePairFunction);
+        JavaPairRDD<KeyDTO, Iterable<ValueDTO>> uncoolPeoplePairGroupedRDD = uncoolPeoplePairRDD.groupByKey();
+        */
+
         Dataset<Row> joinedPeople = coolPeopleDataset.as("cool").join(uncoolPeopleDataset.as("uncool"),
                 joinExpression, "outer");
         List<Row> joinedAndCollectedPeople = joinedPeople.collectAsList();
+
+        /*
+        JavaRDD<Row> joinedPeopleRDD = joinedPeople.toJavaRDD();
+        JavaPairRDD<Object, Object> joinedPeoplePairRDD = joinedPeopleRDD.mapToPair(new PairFunction<Row, Object,
+                Object>() {
+            public Tuple2<Object, Object> call(Row row) throws Exception {
+               return new Tuple2<Object, Object>(row.get(0), row.get(1));
+            }
+        });
+        */
+
+        //List<Tuple2<Object, Object>> joinedPeoplePairedAndCollected = joinedPeoplePairRDD.collect();
         System.out.println("JOINed people - with Datasets + column condition:");
+        //for (Tuple2<Object, Object> tuple : joinedPeoplePairedAndCollected) {
         for (Row row : joinedAndCollectedPeople) {
             System.out.println(row);
         }
