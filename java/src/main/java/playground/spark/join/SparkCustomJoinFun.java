@@ -4,8 +4,6 @@ import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
-import org.apache.spark.api.java.function.FilterFunction;
-import org.apache.spark.api.java.function.ForeachFunction;
 import org.apache.spark.api.java.function.PairFunction;
 import org.apache.spark.sql.*;
 import org.apache.spark.sql.api.java.UDF2;
@@ -21,7 +19,6 @@ import playground.spark.join.dto.ValueDTO;
 import scala.Tuple2;
 import scala.collection.Seq;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -176,41 +173,64 @@ public class SparkCustomJoinFun {
         return matchesUsingFuzzyLogic;
     }
 
-    private static void doJoinWithRawDatasets(Dataset<Row> coolPeopleDataset, final Dataset<Row> uncoolPeopleDataset) {
-        final List<Row> joinedPeopleDataset = new ArrayList<Row>();
+    /*
+    private static void doJoinWithRawDatasets(final Dataset<Row> coolPeopleDataset, final Dataset<Row>
+            uncoolPeopleDataset) {
+        Dataset<Map<String, Object>> map = coolPeopleDataset.map(new MapFunction<Row, Map<String, Object>>() {
 
-        /*
-            TODO: this is a BAD idea, right!?
+            public Map<String, Object> call(Row uncoolPerson) throws Exception {
+                List<Map<String,Object>> uncoolPeopleFiltered = uncoolPeopleDataset.query({fuzzy:coolPerson.getString(1)).limit(15);
 
-            1. In a clustered/non-local environment, we cannot just make the inner ("uncool") and result data sets
-            final: we have to send the inner data set as a broadcast variable to each node - but for big data sets
-            this is not feasible, neither in terms of fitting it in memory or in terms of network traffic.
+                Map<String, Object> out = new HashMap<String, Object>();
+                out.put(coolPerson, ListAppend(uncoolPeopleFiltered));
+                out.put("similarityScore", calculateSimilarity(coolPerson, uncoolPerson));
+                return out;
+            }
 
-            2. Doing a "manual JOIN" this way does not allow Spark to use partitions, as it would with .join()?
+        }, new Encoder<Map<String, Object>>() {
+            public StructType schema() {
+                return null;
+            }
 
-            See e.g.:
-            	- http://heather.miller.am/teaching/cs212/slides/week20.pdf, slide "Partitions"
-	            - http://blog.cloudera.com/blog/2015/03/how-to-tune-your-apache-spark-jobs-part-1/
-
-         */
-        coolPeopleDataset.foreach(new ForeachFunction<Row>() {
-            public void call(final Row coolPerson) throws Exception {
-                // TODO: does not work: uncoolPeopleDataset is "Invalid tree; null:" (an NPE is thrown)!
-                Dataset<Row> uncoolPeopleFiltered = uncoolPeopleDataset.filter(new FilterFunction<Row>() {
-                    public boolean call(Row uncoolPerson) throws Exception {
-                        return fuzzyComparePeople(coolPerson, uncoolPerson);
-                    }
-                });
-
-                joinedPeopleDataset.addAll(uncoolPeopleFiltered.collectAsList());
+            public ClassTag<Map<String, Object>> clsTag() {
+                return null;
             }
         });
 
-        System.out.println("JOINed people - with raw Datasets:");
-        for (Row row : joinedPeopleDataset) {
-            System.out.println(row);
-        }
+
+        coolPeopleDataset.map(new ForeachFunction<Row>() {
+            public void call(final Row coolPerson) throws Exception {
+
+                List<Map<String,Object>> uncoolPeopleFiltered = uncoolPeopleDataset.query({fuzzy:coolPerson.getString(1)).limit(15);
+
+
+                return coolPersonWithUncoolPeopleAndHowSimilarTheyWere;
+
+                uncoolPeopleFiltered.map(new MapFunction<Row, Map<String, Object>>() {
+
+                    public Map<String, Object> call(Row uncoolPerson) throws Exception {
+                        Map<String, Object> out = new HashMap<String, Object>();
+                        out.put("coolPerson", coolPerson);
+                        out.put("uncoolPersons", ListAppend(uncoolPerson));
+                        out.put("similarityScope", calculateSimilarity(coolPerson, uncoolPerson));
+                        return out;
+                    }
+
+                }, new Encoder<Map<String, Object>>() {
+                    public StructType schema() {
+                        return null;
+                    }
+
+                    public ClassTag<Map<String, Object>> clsTag() {
+                        return null;
+                    }
+                });
+
+            }
+        });
+
     }
+    */
 
     private static void doJoinWithDatasetsAndSimpleUDF(Dataset<Row> coolPeopleDataset, Dataset<Row> uncoolPeopleDataset) {
         // TODO: how would this work with a dynamic number of attributes in the JOIN key? Use reflection to load the
