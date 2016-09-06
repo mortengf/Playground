@@ -13,6 +13,7 @@
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
+                    <finalName>${project.artifactId}-${project.activeProfiles[0].id}</finalName>
                     <archive>
                         <manifest>
                             <mainClass>playground.spark.SparkExternalJar</mainClass>
@@ -21,12 +22,20 @@
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
+                    <appendAssemblyId>false</appendAssemblyId>
                 </configuration>
             </plugin>
         </plugins>
     </build>
 
     <profiles>
+        <!-- Purely to get the id for the assembly name -->
+        <profile>
+            <id>local</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
         <profile>
             <id>clustered</id>
             <dependencies>
