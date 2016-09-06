@@ -212,7 +212,7 @@ public class SparkCustomJoinFun {
                         Map<String, Object> out = new HashMap<String, Object>();
                         out.put("coolPerson", coolPerson);
                         out.put("uncoolPersons", ListAppend(uncoolPerson));
-                        out.put("similarityScope", calculateSimilarity(coolPerson, uncoolPerson));
+                        out.put("similarityScore", calculateSimilarity(coolPerson, uncoolPerson));
                         return out;
                     }
 
