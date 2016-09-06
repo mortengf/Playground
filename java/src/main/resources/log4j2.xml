@@ -8,11 +8,11 @@
     </appenders>
 
     <loggers>
-        <logger name="playground" level="info" additivity="false">
+        <logger name="playground" level="debug" additivity="false">
             <appender-ref ref="console" />
         </logger>
 
-        <root level="info" additivity="false">
+        <root level="debug" additivity="false">
             <appender-ref ref="console"/>
         </root>
     </loggers>
