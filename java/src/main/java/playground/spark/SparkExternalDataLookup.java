@@ -56,6 +56,7 @@ public class SparkExternalDataLookup {
             fieldNameWeights) {
         Double totalScore = 0.0;
 
+        // TODO: same "source/target field name" comment as below
         for (String fieldName : fieldNameScores.keySet()) {
             Double score = fieldNameScores.get(fieldName);
             Double weight = fieldNameWeights.get(fieldName);
