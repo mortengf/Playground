@@ -1,4 +1,4 @@
-package playground.spark.row.comparison_method;
+package playground.spark.external.comparison_method;
 
 public class RangeComparisonMethod implements ComparisonMethod {
     private int range;
@@ -17,10 +17,14 @@ public class RangeComparisonMethod implements ComparisonMethod {
         if (diff <= range) {
            score = 1.0;
         // TODO: how to implement a "gradually declining" score?
-        } else if (diff < range * 2) {
+        } else if (diff < range * 1.3) {
+            score = 0.7;
+        } else if (diff < range * 1.5) {
             score = 0.5;
+        } else if (diff < range * 1.7) {
+            score = 0.3;
         } else {
-            score = 0.01;
+            score = 0.1;
         }
 
         return score;

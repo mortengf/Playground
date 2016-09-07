@@ -1,4 +1,4 @@
-package playground.spark;
+package playground.spark.external;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.spark.SparkConf;

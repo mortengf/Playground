@@ -1,4 +1,4 @@
-package playground.spark.row;
+package playground.spark.external;
 
 import java.io.Serializable;
 import java.util.HashMap;

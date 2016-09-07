@@ -1,6 +1,6 @@
-package playground.spark.row;
+package playground.spark.external;
 
-import playground.spark.row.comparison_method.ComparisonMethod;
+import playground.spark.external.comparison_method.ComparisonMethod;
 
 import java.io.Serializable;
 

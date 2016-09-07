@@ -1,4 +1,4 @@
-package playground.spark.row.comparison_method;
+package playground.spark.external.comparison_method;
 
 public class ExactComparisonMethod implements ComparisonMethod {
 
