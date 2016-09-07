@@ -1,19 +1,18 @@
 package playground.spark.row;
 
-import org.apache.spark.sql.types.DataType;
+import playground.spark.row.comparison_method.ComparisonMethod;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.Serializable;
 
-
-public class FieldConfig {
+public class FieldConfig implements Serializable {
     private boolean isKey;
     private ComparisonMethod comparisonMethod;
     private Double weight;
 
-    public FieldConfig() {
-        // TODO: which comparison methods to instantiate - this should of course be dynamic
-        comparisonMethod = new RangeComparisonMethod();
+    public FieldConfig(boolean isKey, ComparisonMethod comparisonMethod, Double weight) {
+        this.isKey = isKey;
+        this.comparisonMethod = comparisonMethod;
+        this.weight = weight;
     }
 
     public boolean isKey() {
@@ -22,5 +21,9 @@ public class FieldConfig {
 
     public ComparisonMethod getComparisonMethod() {
         return comparisonMethod;
+    }
+
+    public Double getWeight() {
+        return weight;
     }
 }
