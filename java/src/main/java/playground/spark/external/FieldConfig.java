@@ -9,8 +9,12 @@ public class FieldConfig implements Serializable {
     private ComparisonMethod comparisonMethod;
     private Double weight;
 
-    public FieldConfig(boolean isKey, ComparisonMethod comparisonMethod, Double weight) {
+    public FieldConfig(boolean isKey) {
         this.isKey = isKey;
+    }
+
+    public FieldConfig(boolean isKey, ComparisonMethod comparisonMethod, Double weight) {
+        this(isKey);
         this.comparisonMethod = comparisonMethod;
         this.weight = weight;
     }

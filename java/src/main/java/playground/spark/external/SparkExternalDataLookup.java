@@ -41,8 +41,10 @@ public class SparkExternalDataLookup {
         // TODO: this must be possible to define dynamically
         matchConfig.addFieldConfig("firstName", new FieldConfig(true, new ExactComparisonMethod(), 0.2));
         matchConfig.addFieldConfig("lastName", new FieldConfig(true, new ExactComparisonMethod(), 0.3));
-        matchConfig.addFieldConfig("age", new FieldConfig(true, new RangeComparisonMethod(30), 0.5));
-        matchConfig.addFieldConfig("sex", new FieldConfig(false, new ExactComparisonMethod(), null));
+        matchConfig.addFieldConfig("age", new FieldConfig(true, new RangeComparisonMethod(20), 0.5));
+        matchConfig.addFieldConfig("sex", new FieldConfig(false));
+
+        // TODO: check that sum of weights = 1.0
 
         return matchConfig;
     }
@@ -78,7 +80,7 @@ public class SparkExternalDataLookup {
         Map<String, Double> fieldNameWeights = new HashMap<String, Double>();
 
         // TODO: we use the source field name to get the target field config so currently source and target names
-        // must match: at least implement a check for this
+        // must match: implement a <source field name, target field name> mapping or at least a check
         for (StructField sourceField : sourceFields) {
             String sourceFieldName = sourceField.name();
             Object sourceValue = sourceRowRdd.getAs(sourceFieldName);
@@ -147,22 +149,22 @@ public class SparkExternalDataLookup {
         if (top > 100) {
             throw new IllegalArgumentException("Input argument 'top' must be below 100");
         }
-        Set<DataRow> topMatchesAboveThresholdWithScores = new HashSet<DataRow>();
+        Set<DataRow> topMatchesAboveThreshold = new HashSet<DataRow>();
 
         OrderedHashSet<DataRow> topMatches = getTopMatches(matchDatasetName, top);
         for (DataRow topMatch : topMatches) {
             enrichTargetRowWithSimilarityScores(key, topMatch, matchConfig);
             if (topMatch.getTotalScore() >= threshold) {
-                topMatchesAboveThresholdWithScores.add(topMatch);
+                topMatchesAboveThreshold.add(topMatch);
             }
         }
 
-        return new Tuple2<DataRow, Set<DataRow>>(key, topMatchesAboveThresholdWithScores);
+        return new Tuple2<DataRow, Set<DataRow>>(key, topMatchesAboveThreshold);
     }
 
     public static void main(String[] args) {
         // TODO: send these to worker nodes via broadcast variables?
-        final Double threshold = 0.2;
+        final Double threshold = 0.01;
         final int top = 15;
         final MatchConfig matchConfig = createMatchConfig();
 
