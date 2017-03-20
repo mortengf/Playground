@@ -14,9 +14,6 @@ function callAPI(offset) {
     return Q.Promise(function(resolve, reject) {
         request({
             headers: {
-                'X-DexiIO-Account': 'xxx',
-                'X-DexiIO-User': 'xxx',
-                'X-DexiIO-Access': 'xxx',
                 'Content-Type': 'application/json'
             },
             method: 'POST',
