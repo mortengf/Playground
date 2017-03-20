@@ -1,0 +1,8 @@
+{
+  "name": "playground",
+  "version": "0.0.1",
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "q": "^1.4.1"
+  }
+}
