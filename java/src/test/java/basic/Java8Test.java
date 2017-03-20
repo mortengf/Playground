@@ -1,4 +1,4 @@
-package dk.untangle;
+package basic;
 
 import java.util.ArrayList;
 import java.util.List;
