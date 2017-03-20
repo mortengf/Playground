@@ -1,0 +1,26 @@
+
+    // TODO: move somewhere more general - where?
+    private static String[] getFileContentsList(String directoryName) {
+        List<String> fileContentsList = new ArrayList<>();
+
+        try {
+            ClassLoader classLoader = MyClass.class.getClassLoader();
+            URL directoryResource = classLoader.getResource(directoryName);
+            if (directoryResource != null) {
+                File directory = new File(directoryResource.getFile());
+                if (directory != null) {
+                    for (File file : directory.listFiles()) {
+                        InputStream fileStream = classLoader.getResourceAsStream(directoryName + IOUtils.DIR_SEPARATOR + file.getName());
+                        if (fileStream != null) {
+                            String fileContents = IOUtils.toString(fileStream);
+                            fileContentsList.add(fileContents);
+                        }
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return (String[]) fileContentsList.toArray(new String[fileContentsList.size()]);
+    }
