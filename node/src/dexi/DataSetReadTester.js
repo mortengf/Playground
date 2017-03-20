@@ -45,12 +45,13 @@ function callAPI(offset) {
 }
 
 var promises = [];
-for (var i=0; i<50; i+=10) {
-    var promise = callAPI(0);
+for (var i=8000; i<11000; i+=10) {
+    var promise = callAPI(i);
     promises.push(promise);
 }
 
 Q.allSettled(promises).then(function (results) {
+        console.log(results.length + ' promises returned results...');
         for (var currentIndex=0; currentIndex<results.length-1; currentIndex++) {
             var currentResult = results[currentIndex];
             var nextIndex = currentIndex + 1;
