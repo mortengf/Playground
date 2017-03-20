@@ -13,6 +13,7 @@ function callAPI(offset) {
 
     return Q.Promise(function(resolve, reject) {
         request({
+            // TODO: add required 'X-' headers
             headers: {
                 'Content-Type': 'application/json'
             },
