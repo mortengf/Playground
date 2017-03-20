@@ -65,7 +65,12 @@ function doCall() {
 
 doCall().then(function () {
 //Q.allSettled(promises).then(function (results) {
-        console.log(results.length + ' promises returned results...');
+    var rowIdsFlattened = _.flatten(results);
+    console.log('# row IDs: ' + rowIdsFlattened.length);
+    console.log('# row IDs - after duplicates removed: ' + _.uniq(rowIdsFlattened).length);
+
+    //console.log(results.length + ' promises returned results...');
+    /*
         for (var currentIndex=0; currentIndex<results.length-1; currentIndex++) {
             var currentResult = results[currentIndex];
             var nextIndex = currentIndex + 1;
@@ -86,5 +91,7 @@ doCall().then(function () {
                 throw new Error(reason);
             }
         }
+        */
+
     });
 
