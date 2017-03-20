@@ -43,12 +43,28 @@ function callAPI(offset) {
 }
 
 var promises = [];
-for (var i=8000; i<11000; i+=10) {
-    var promise = callAPI(i);
-    promises.push(promise);
+var offsets = [];
+var results = [];
+
+for (var i=8000; i<12000; i+=10) {
+    offsets.push(i);
+    //var promise = callAPI(i);
+    //promises.push(promise);
 }
 
-Q.allSettled(promises).then(function (results) {
+// TODO: is this a home-made version of sequences in Q? Made by pair-programming mate.
+function doCall() {
+    if (offsets.length < 1) {
+        return Q();
+    }
+
+    return callAPI(offsets.shift()).then(function(result) {
+        results.push(result);
+    }).then(doCall);
+}
+
+doCall().then(function () {
+//Q.allSettled(promises).then(function (results) {
         console.log(results.length + ' promises returned results...');
         for (var currentIndex=0; currentIndex<results.length-1; currentIndex++) {
             var currentResult = results[currentIndex];
