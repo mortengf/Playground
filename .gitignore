@@ -2,3 +2,4 @@ java/target
 scala/target
 node_modules
 .idea
+java/src/main/resources/*.json
