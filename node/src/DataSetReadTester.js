@@ -2,26 +2,61 @@ var _ = require('lodash');
 var request = require('request');
 var Q = require('q');
 
-function callAPI(offset) {
+function searchElasticsearch(offset) {
+    var esRequest = {
+        "from": offset,
+        "size": 10,
+        "query":{"match_all":{}}
+    };
+
+    return Q.Promise(function(resolve, reject) {
+        request({
+            method: 'POST',
+            url: 'http://<host>:<port>/<index>/_search?preference=_primary',
+            body: JSON.stringify(esRequest)
+        }, function (error, response, body) {
+            if (error) {
+                console.log(error);
+                return reject(error);
+            }
+
+            //console.log('error:', error);
+            //console.log('statusCode:', response && response.statusCode);
+            //console.log('body:', JSON.parse(body));
+            var parsedBody = JSON.parse(body);
+
+            var rowIds = [];
+            if (parsedBody.hits && parsedBody.hits.hits) {
+                parsedBody.hits.hits.forEach(function (hit) {
+                    //console.log(JSON.stringify(hit));
+                    rowIds.push(hit._id);
+                });
+            }
+
+            return resolve(rowIds);
+        });
+    });
+
+}
+
+function searchDataSet(offset) {
     var options = {
-        "indexId": "4f979900-2c58-4e15-b70e-72d753b0fc95",
+        "indexId": 'eb0b824c-60ba-4f94-9805-48b268bb072f', //'4f979900-2c58-4e15-b70e-72d753b0fc95'
         "offset": offset,
         "limit": 10,
         "query": {},
-        "sorting": {}
+        "sorting": { "_id": "ASC" }
     };
 
     return Q.Promise(function(resolve, reject) {
         request({
             // TODO: add required 'X-' headers
-            headers: {
-                'Content-Type': 'application/json'
-            },
             method: 'POST',
-            url: 'http://localhost:8080/rest/datasets/rows/search',
+            url: 'http://<host>:<port>/rest/datasets/rows/search',
             body: JSON.stringify(options)
         }, function (error, response, body) {
             if (error) {
+                console.log(error);
                 return reject(error);
             }
 
@@ -42,11 +77,11 @@ function callAPI(offset) {
     });
 }
 
-var promises = [];
+//var promises = [];
 var offsets = [];
 var results = [];
 
-for (var i=8000; i<12000; i+=10) {
+for (var i=0; i<10200; i+=10) {
     offsets.push(i);
     //var promise = callAPI(i);
     //promises.push(promise);
@@ -58,13 +93,20 @@ function doCall() {
         return Q();
     }
 
-    return callAPI(offsets.shift()).then(function(result) {
+    /*
+    return searchDataSet(offsets.shift()).then(function(result) {
+        results.push(result);
+    }).then(doCall);
+    */
+
+    return searchElasticsearch(offsets.shift()).then(function(result) {
         results.push(result);
     }).then(doCall);
 }
 
 doCall().then(function () {
 //Q.allSettled(promises).then(function (results) {
+
     var rowIdsFlattened = _.flatten(results);
     console.log('# row IDs: ' + rowIdsFlattened.length);
     console.log('# row IDs - after duplicates removed: ' + _.uniq(rowIdsFlattened).length);
@@ -93,5 +135,8 @@ doCall().then(function () {
         }
         */
 
+    })
+    .fail(function (error) {
+        console.log(error);
     });
 
