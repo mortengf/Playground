@@ -16,7 +16,7 @@
                     <finalName>${project.artifactId}-${project.activeProfiles[0].id}</finalName>
                     <archive>
                         <manifest>
-                            <mainClass>playground.spark.external.SparkExternalJar</mainClass>
+                            <mainClass>mortengf.playground.spark.external.SparkExternalJar</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
@@ -87,6 +87,11 @@
             <groupId>com.googlecode.json-simple</groupId>
             <artifactId>json-simple</artifactId>
             <version>1.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.9.5</version>
         </dependency>
     </dependencies>
 
