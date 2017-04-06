@@ -11,7 +11,8 @@ var esBaseUrl = '<baseUrl>';
 
 const esIndexId = '<indexId>';
 
-var esUrl = esBaseUrl + esIndexId + '/_search?preference=' + preference;
+var esUrl = esBaseUrl + '/' + esIndexId + '/_search?preference=' + preference;
+
 const startIndex = 9399; // TODO: works with start=9499 even without "preference"???
 const endIndex = 9999;
 const pageSize = 10;
@@ -77,6 +78,8 @@ function doCall() {
 	}).then(doCall);
 
 }
+
+console.log("Searching " + esIndexId + " on server " + esUrl + " from index " + startIndex + " to index " + endIndex + " with a page size of " + pageSize);
 
 doCall().then(function () {
     var rowIdsFlattened = _.flatten(results);
