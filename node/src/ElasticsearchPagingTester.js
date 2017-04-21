@@ -4,8 +4,8 @@ var Q = require('q');
 
 const preference = '2378278'; // TODO: generate a random UUID
 
-// TODO: get all values below from CLI options
-// Usage: node ElasticsearchPagingTester.js <esUrl> <indexId> <startIndex> <endIndex> <pageSize>
+// TODO: get all values below from CLI options. Usage would then be:
+//      node ElasticsearchPagingTester.js <esUrl> <indexId> <startIndex> <endIndex> <pageSize>
 
 var esBaseUrl = '<baseUrl>';
 
@@ -79,13 +79,21 @@ function doCall() {
 
 }
 
-console.log("Searching " + esIndexId + " on server " + esUrl + " from index " + startIndex + " to index " + endIndex + " with a page size of " + pageSize);
+// See https://www.elastic.co/guide/en/elasticsearch/reference/2.1/search-request-from-size.html#search-request-from-size
+if (endIndex < 10000) {
+    console.log("Searching " + esIndexId + " on server " + esUrl + " from index " + startIndex + " to index " + endIndex + " with a page size of " + pageSize + "...");
 
-doCall().then(function () {
-    var rowIdsFlattened = _.flatten(results);
-    console.log('# row IDs: ' + rowIdsFlattened.length);
-    console.log('# row IDs - after duplicates removed: ' + _.uniq(rowIdsFlattened).length);
-}).fail(function (error) {
-    console.log(error);
-});
+    doCall().then(function () {
+        var rowIdsFlattened = _.flatten(results);
+        console.log('# row IDs: ' + rowIdsFlattened.length);
+        console.log('# row IDs - after duplicates removed: ' + _.uniq(rowIdsFlattened).length);
+    }).fail(function (error) {
+        console.log(error);
+    });
+} else {
+    console.log("Script only supports ES pagination (not scrolling) which requires end index to be below 10000");
+}
+
+
+
 
