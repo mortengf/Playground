@@ -15,14 +15,14 @@ public class WeekDays {
            for (int day = 1; day <= c.getActualMaximum(Calendar.DAY_OF_MONTH); day++) {
                c.set(Calendar.DAY_OF_MONTH, day);
 
-               if (isWeekDay(c)) {
+               //if (isWeekDay(c)) {
                    System.out.println(day + "/" + (month + 1) + "/" + c.get(Calendar.YEAR));
-               } 
+               //} 
 			   
 			   // Only print on week total per weekend
 			   // TODO: comparing with SUNDAY causes week numbers to increase by 1: why?
 			   if (c.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) { 
-				   System.out.println("Uge " + c.get(Calendar.WEEK_OF_YEAR) + "-total");
+				   //System.out.println("Uge " + c.get(Calendar.WEEK_OF_YEAR) + "-total");
 			   }
 			   
 			   if (c.get(Calendar.DAY_OF_MONTH) == c.getActualMaximum(Calendar.DAY_OF_MONTH)) {
