@@ -1,0 +1,6 @@
+apiVersion: snapshot.wbc.com/v1alpha1
+kind: WbcSnapshot
+metadata:
+  name: wbcsnapshot-sample
+spec:
+  # TODO(user): Add fields here
