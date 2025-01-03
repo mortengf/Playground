@@ -1,7 +1,7 @@
 Prerequisites: 
 
-* python 3 installed
-* Install the following python packages via `pip`:
+* python 3
+* Install the following packages (via `pip`):
 
 
 ```
