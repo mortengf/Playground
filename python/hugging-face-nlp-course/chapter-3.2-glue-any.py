@@ -5,7 +5,7 @@ from transformers import AutoTokenizer
 from transformers import DataCollatorWithPadding
 
 # https://github.com/huggingface/transformers/blob/main/examples/pytorch/text-classification/run_glue.py#L55
-task_to_keys = {
+dataset_to_keys = {
     "cola": ("sentence", None),
     "mnli": ("premise", "hypothesis"),
     "mrpc": ("sentence1", "sentence2"),
@@ -17,9 +17,9 @@ task_to_keys = {
     "wnli": ("sentence1", "sentence2"),
 }
 
-task = "mrpc" # TODO: get from CLI arg
+dataset = "mrpc" # TODO: get from CLI arg
 
-raw_datasets = load_dataset("glue", task)
+raw_datasets = load_dataset("glue", dataset)
 print(raw_datasets)
 
 raw_train_dataset = raw_datasets["train"]
@@ -27,13 +27,13 @@ raw_train_dataset = raw_datasets["train"]
 train_row = raw_train_dataset[0]
 #print(train_row)
 
-key_names_required = list(filter(None, task_to_keys[task]))
+key_names_required = list(filter(None, dataset_to_keys[dataset]))
 key_names_dataset_row = train_row.keys()
 
 if not set(key_names_required).issubset(set(key_names_dataset_row)):
-	error_message = "All required keys {} of chosen task '{}' are not present in keys of first data set row {}".format(key_names_required, task, str(key_names_dataset_row))
+	error_message = "All required keys {} of chosen dataset '{}' are not present in keys of first data set row {}".format(key_names_required, dataset, str(key_names_dataset_row))
 	raise ValueError(error_message)
-	#print(f"All required keys {key_names_required} of chosen task '{task}' are not present in keys of first data set row {key_names_dataset_row}")
+	#print(f"All required keys {key_names_required} of chosen dataset '{dataset}' are not present in keys of first data set row {key_names_dataset_row}")
 
 checkpoint = "bert-base-uncased"
 tokenizer = AutoTokenizer.from_pretrained(checkpoint)
