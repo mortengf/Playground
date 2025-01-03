@@ -17,7 +17,7 @@ task_to_keys = {
     "wnli": ("sentence1", "sentence2"),
 }
 
-task = "mnli" # TODO: get from user
+task = "cola" # TODO: get from user
 
 raw_datasets = load_dataset("glue", task)
 print(raw_datasets)
@@ -27,7 +27,7 @@ raw_train_dataset = raw_datasets["train"]
 train_row = raw_train_dataset[0]
 #print(train_row)
 
-key_names_required = task_to_keys[task]
+key_names_required = list(filter(None, task_to_keys[task]))
 key_names_dataset_row = train_row.keys()
 
 if not set(key_names_required).issubset(set(key_names_dataset_row)):
