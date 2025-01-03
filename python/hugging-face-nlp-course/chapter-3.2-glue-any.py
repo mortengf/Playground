@@ -17,7 +17,7 @@ task_to_keys = {
     "wnli": ("sentence1", "sentence2"),
 }
 
-task = "cola" # TODO: get from user
+task = "mrpc" # TODO: get from CLI arg
 
 raw_datasets = load_dataset("glue", task)
 print(raw_datasets)
@@ -39,14 +39,9 @@ checkpoint = "bert-base-uncased"
 tokenizer = AutoTokenizer.from_pretrained(checkpoint)
 
 def tokenize_function(dataset_rows):
-	# https://chatgpt.com/share/677805fb-2f2c-8007-9dfc-7f35a81c6ac9
-
+	# See https://chatgpt.com/share/677805fb-2f2c-8007-9dfc-7f35a81c6ac9
 	number_of_rows_in_batch = len(dataset_rows[key_names_required[0]])
-
-	# TODO: ok to use a space as separator? Isn't the separator model/task-specific? (see https://huggingface.co/learn/nlp-course/en/chapter2/6?fw=pt#special-tokens)
-	# Check https://huggingface.co/learn/nlp-course/en/chapter3/2 + find out what separator has been used for "bert-base-uncased"
-	
-	combined_values = [" ".join([dataset_rows[key_name][current_row_number] for key_name in key_names_required]) for current_row_number in range(number_of_rows_in_batch)]
+	combined_values = ["[SEP]".join([dataset_rows[key_name][current_row_number] for key_name in key_names_required]) for current_row_number in range(number_of_rows_in_batch)]
 	return tokenizer(combined_values, truncation=True)
     
 tokenized_datasets = raw_datasets.map(tokenize_function, batched=True)
