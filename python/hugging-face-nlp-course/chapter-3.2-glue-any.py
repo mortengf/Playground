@@ -38,11 +38,16 @@ if not set(key_names_required).issubset(set(key_names_dataset_row)):
 checkpoint = "bert-base-uncased"
 tokenizer = AutoTokenizer.from_pretrained(checkpoint)
 
-def tokenize_function(dataset_row):
-	# https://chatgpt.com/share/6777eeb0-cd38-8007-a01b-f8d0a9467148
+def tokenize_function(dataset_rows):
+	# https://chatgpt.com/share/677805fb-2f2c-8007-9dfc-7f35a81c6ac9
+
+	number_of_rows_in_batch = len(dataset_rows[key_names_required[0]])
+
 	# TODO: ok to use a space as separator? Isn't the separator model/task-specific? (see https://huggingface.co/learn/nlp-course/en/chapter2/6?fw=pt#special-tokens)
-    combined_texts = [" ".join([dataset_row[key_name][row_number] for key_name in key_names_required]) for row_number in range(len(dataset_row[key_names_required[0]]))]
-    return tokenizer(combined_texts, truncation=True)
+	# Check https://huggingface.co/learn/nlp-course/en/chapter3/2 + find out what separator has been used for "bert-base-uncased"
+	
+	combined_values = [" ".join([dataset_rows[key_name][current_row_number] for key_name in key_names_required]) for current_row_number in range(number_of_rows_in_batch)]
+	return tokenizer(combined_values, truncation=True)
     
 tokenized_datasets = raw_datasets.map(tokenize_function, batched=True)
 print(tokenized_datasets)
