@@ -10,7 +10,7 @@ pip install torch torchvision #PyTorch
 pip install datasets
 ```
 
-# Hugging Face Terminology
+# Machine Learning (ML) / Hugging Face Terminology
 
 * [Task](https://huggingface.co/tasks) ([alternative link](https://huggingface.co/docs/hub/en/models-tasks)) (pipeline type): “shape” of a model’s API, e.g. natural language processing, text-to-image (and vice versa), etc.
 * Model: a neural network that will perform a task.
