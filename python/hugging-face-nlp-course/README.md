@@ -20,7 +20,7 @@ pip install datasets
     * Large Language Model (LLM): a model specifically designed and trained for natural language (text) processing tasks. Examples: [BERT](https://huggingface.co/docs/transformers/en/model_doc/bert), [DistilBERT](https://huggingface.co/docs/transformers/en/model_doc/distilbert) and [OpenAI GPT](https://huggingface.co/docs/transformers/en/model_doc/openai-gpt)
     * Text-to-image examples: DALL-E, Stable Diffusion, Imagen, etc.
 * [Paradigm/approach](https://www.pecan.ai/blog/3-types-of-machine-learning/) (supervised/unsupervised/reinforcement): the pretraining part of models like BERT and GPT is typically unsupervised working on unlabelled data, whereas the fine-tuning part is typically supervised, working on labelled data (e.g. 0: not equivalent, 1: equivalent).
-* [Dataset](https://huggingface.co/docs/datasets/en/index): data divided into data for training (`train`), evaluation (`test`) and often validation (of hyper parameters? (logits?)) (`validation`). Examples: 
+* [Dataset](https://huggingface.co/docs/datasets/en/index): data divided into training (`train`), evaluation (`test`) and often validation (of hyper parameters? (logits?)) (`validation`). Examples: 
   * [General Language Understanding Evaluation (GLUE)](https://huggingface.co/datasets/nyu-mll/glue) benchmark:
     * [Corpus of Linguistic Acceptability (cola)](https://huggingface.co/datasets/nyu-mll/glue/viewer/cola)
     * [Multi-Genre Natural Language Inference (mnli)](https://huggingface.co/datasets/nyu-mll/glue/viewer/mnli)
