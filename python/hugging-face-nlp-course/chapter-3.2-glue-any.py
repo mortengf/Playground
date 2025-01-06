@@ -50,8 +50,8 @@ def tokenize_function(dataset_rows):
 	
 	# BERT-style tokenization
 	combined_values = [
-    	"[CLS] The sky [SEP] is blue. [SEP]",
-    	"[CLS] Grass [SEP] is green. [SEP]"
+    	    "[CLS] The sky [SEP] is blue. [SEP]",
+    	    "[CLS] Grass [SEP] is green. [SEP]"
 	]
 	'''
 	combined_values = [
