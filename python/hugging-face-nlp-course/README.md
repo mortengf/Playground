@@ -22,10 +22,13 @@ pip install evaluate
     * Text-to-image examples: DALL-E, Stable Diffusion, Imagen, etc.
 * [Paradigm/approach](https://www.pecan.ai/blog/3-types-of-machine-learning/) (supervised/unsupervised/reinforcement): the pretraining part of models like BERT and GPT is typically unsupervised working on unlabelled data, whereas the fine-tuning part is typically supervised, working on labelled data (e.g. 0: not equivalent, 1: equivalent).
 * [Dataset](https://huggingface.co/docs/datasets/en/index): data divided into the following parts:
-  * Training data (`train`): train/teach the model via pairs of inputs + correct/expected outputs. Output is in the form of model weights (logits?) 
-  * Validation (`validation`): validation (and tweaking?) of the chosen model/hyper parameters/hidden units. Output is in the form of accurracy/loss.
-    * Sometimes this data set is omitted.
-  * Evaluation/test (`test`): evaluation of the model against unknown data. Used after all fine-tuning has completed. Output is in the form of accurracy/precision/recall.
+  * Training data (`train`): train/teach the model via inputs and expected/correct outputs.
+    * Output is in the form of model weights (logits?) 
+  * Validation (`validation`): validation (and tweaking?) of the chosen model/hyper parameters/hidden units.
+    * Output is in the form of accurracy/loss.
+    * Sometimes (but not very often?) this data set is omitted.
+  * Evaluation/test (`test`): evaluation of the model against unknown data. Used after all fine-tuning has completed.
+    * Output is in the form of accurracy/precision/recall.
   * Examples: 
     * [General Language Understanding Evaluation (GLUE)](https://huggingface.co/datasets/nyu-mll/glue) benchmark:
       * [Corpus of Linguistic Acceptability (cola)](https://huggingface.co/datasets/nyu-mll/glue/viewer/cola)
@@ -34,4 +37,4 @@ pip install evaluate
       * [Stanford Sentiment Treebank (sst2)](https://huggingface.co/datasets/nyu-mll/glue/viewer/sst2)
       * ...
     * Other:
-    * ...
+      * ...
