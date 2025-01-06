@@ -21,11 +21,17 @@ pip install evaluate
     * Large Language Model (LLM): a model specifically designed and trained for natural language (text) processing tasks. Examples: [BERT](https://huggingface.co/docs/transformers/en/model_doc/bert), [DistilBERT](https://huggingface.co/docs/transformers/en/model_doc/distilbert) and [OpenAI GPT](https://huggingface.co/docs/transformers/en/model_doc/openai-gpt)
     * Text-to-image examples: DALL-E, Stable Diffusion, Imagen, etc.
 * [Paradigm/approach](https://www.pecan.ai/blog/3-types-of-machine-learning/) (supervised/unsupervised/reinforcement): the pretraining part of models like BERT and GPT is typically unsupervised working on unlabelled data, whereas the fine-tuning part is typically supervised, working on labelled data (e.g. 0: not equivalent, 1: equivalent).
-* [Dataset](https://huggingface.co/docs/datasets/en/index): data divided into training (`train`), evaluation (`test`) and often validation (of hyper parameters? (logits?)) (`validation`). Examples: 
-  * [General Language Understanding Evaluation (GLUE)](https://huggingface.co/datasets/nyu-mll/glue) benchmark:
-    * [Corpus of Linguistic Acceptability (cola)](https://huggingface.co/datasets/nyu-mll/glue/viewer/cola)
-    * [Multi-Genre Natural Language Inference (mnli)](https://huggingface.co/datasets/nyu-mll/glue/viewer/mnli)
-    * [Microsoft Research Paraphrase Corpus (mrpc)](https://huggingface.co/datasets/nyu-mll/glue/viewer/mrpc/train)
-    * [Stanford Sentiment Treebank (sst2)](https://huggingface.co/datasets/nyu-mll/glue/viewer/sst2)
-  * Other:
+* [Dataset](https://huggingface.co/docs/datasets/en/index): data divided into the following parts:
+  * Training data (`train`): train/teach the model via pairs of inputs + correct/expected outputs. Output is in the form of model weights (logits?) 
+  * Validation (`validation`): validation (and tweaking?) of the chosen model/hyper parameters/hidden units. Output is in the form of accurracy/loss.
+    * Sometimes this data set is omitted.
+  * Evaluation/test (`test`): evaluation of the model against unknown data. Used after all fine-tuning has completed. Output is in the form of accurracy/precision/recall.
+  * Examples: 
+    * [General Language Understanding Evaluation (GLUE)](https://huggingface.co/datasets/nyu-mll/glue) benchmark:
+      * [Corpus of Linguistic Acceptability (cola)](https://huggingface.co/datasets/nyu-mll/glue/viewer/cola)
+      * [Multi-Genre Natural Language Inference (mnli)](https://huggingface.co/datasets/nyu-mll/glue/viewer/mnli)
+      * [Microsoft Research Paraphrase Corpus (mrpc)](https://huggingface.co/datasets/nyu-mll/glue/viewer/mrpc/train)
+      * [Stanford Sentiment Treebank (sst2)](https://huggingface.co/datasets/nyu-mll/glue/viewer/sst2)
+      * ...
+    * Other:
     * ...
