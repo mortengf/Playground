@@ -38,10 +38,26 @@ if not set(key_names_required).issubset(set(key_names_dataset_row)):
 checkpoint = "bert-base-uncased"
 tokenizer = AutoTokenizer.from_pretrained(checkpoint)
 
+# https://chatgpt.com/share/677805fb-2f2c-8007-9dfc-7f35a81c6ac9
 def tokenize_function(dataset_rows):
-	# See https://chatgpt.com/share/677805fb-2f2c-8007-9dfc-7f35a81c6ac9
-	number_of_rows_in_batch = len(dataset_rows[key_names_required[0]])
-	combined_values = ["[SEP]".join([dataset_rows[key_name][current_row_number] for key_name in key_names_required]) for current_row_number in range(number_of_rows_in_batch)]
+	number_of_rows_in_batch = len(dataset_rows[key_names_required[0]])	
+
+	# https://chatgpt.com/share/677be5a2-fbdc-8007-8fbf-751f6eff76ab
+	'''	
+	sentence1	sentence2
+	"The sky"	"is blue."
+	"Grass"		"is green."
+	
+	# BERT-style tokenization
+	combined_values = [
+    	"[CLS] The sky [SEP] is blue. [SEP]",
+    	"[CLS] Grass [SEP] is green. [SEP]"
+	]
+	'''
+	combined_values = [
+		"[CLS] " + " [SEP] ".join([dataset_rows[key_name][current_row_number] for key_name in key_names_required]) + " [SEP]"
+		for current_row_number in range(number_of_rows_in_batch)
+	]
 	return tokenizer(combined_values, truncation=True)
     
 tokenized_datasets = raw_datasets.map(tokenize_function, batched=True)
@@ -56,5 +72,6 @@ samples = {k: v for k, v in samples.items() if k not in key_names_not_empty}
 [print(len(x)) for x in samples["input_ids"]]
 
 batch = data_collator(samples)
-# See https://chatgpt.com/share/6777b88f-dbdc-8007-953a-6059a9d88f21
+
+# https://chatgpt.com/share/6777b88f-dbdc-8007-953a-6059a9d88f21
 {k: (print(f"Key: {k}, Shape: {v.shape}") or v.shape) for k, v in batch.items()}
