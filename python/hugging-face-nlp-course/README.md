@@ -9,6 +9,7 @@ pip install "transformers[sentencepiece]"
 pip install transformers[torch]
 pip install torch torchvision #PyTorch
 pip install datasets
+pip install evaluate
 ```
 
 # Machine Learning (ML) / Hugging Face Terminology
