@@ -39,8 +39,14 @@ checkpoint = "bert-base-uncased"
 tokenizer = AutoTokenizer.from_pretrained(checkpoint)
 
 # https://chatgpt.com/share/677805fb-2f2c-8007-9dfc-7f35a81c6ac9
-def tokenize_function(dataset_rows):
-	number_of_rows_in_batch = len(dataset_rows[key_names_required[0]])	
+# 
+# "In machine learning, an example is usually defined as the set of features that we feed to the model. 
+# In some contexts, these features will be the set of columns in a Dataset, but in others (like here and for question answering), 
+# multiple features can be extracted from a single example and belong to a single column."
+# From https://huggingface.co/learn/nlp-course/en/chapter5/3
+# 
+def tokenize_function(examples):
+	number_of_rows_in_batch = len(examples[key_names_required[0]])
 
 	# https://chatgpt.com/share/677be5a2-fbdc-8007-8fbf-751f6eff76ab
 	'''	
@@ -55,7 +61,7 @@ def tokenize_function(dataset_rows):
 	]
 	'''
 	combined_values = [
-		"[CLS] " + " [SEP] ".join([dataset_rows[key_name][current_row_number] for key_name in key_names_required]) + " [SEP]"
+		"[CLS] " + " [SEP] ".join([examples[key_name][current_row_number] for key_name in key_names_required]) + " [SEP]"
 		for current_row_number in range(number_of_rows_in_batch)
 	]
 	return tokenizer(combined_values, truncation=True)
