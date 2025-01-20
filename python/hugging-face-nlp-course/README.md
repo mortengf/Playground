@@ -20,7 +20,11 @@ pip install evaluate
   * [Transformer](https://huggingface.co/docs/transformers/en/index): an ML model based on the [Transformer](https://research.google/blog/transformer-a-novel-neural-network-architecture-for-language-understanding/) architecture (from 2017 paper "Attention Is All You Need" by Vaswani et al.) that can be applied to multiple modalities. Most modern models are Transformer-based.
     * Large Language Model (LLM): a model specifically designed and trained for natural language (text) processing tasks. Examples: [BERT (Google)](https://huggingface.co/docs/transformers/en/model_doc/bert), [DistilBERT (Hugging Face)](https://huggingface.co/docs/transformers/en/model_doc/distilbert) and [GPT (OpenAI)](https://huggingface.co/docs/transformers/en/model_doc/openai-gpt)
     * Text-to-image examples: DALL-E, Stable Diffusion, Imagen, etc.
-* [Paradigm/approach](https://www.pecan.ai/blog/3-types-of-machine-learning/) (supervised/unsupervised/reinforcement): the pre-training part of models like BERT and GPT is typically unsupervised working on unlabelled data, whereas the fine-tuning (transfer learning) part is typically supervised, working on labelled data (e.g. 0: not equivalent, 1: equivalent).
+* [Paradigm/approach](https://www.wolfram.com/language/introduction-machine-learning/machine-learning-paradigms/):
+    * Supervised: model learns (train a predictive model) from a set of input-output pairs, which are called labeled examples, to predict an output value (label) for a new, unseen input.
+    * Unsupervised: perform e.g. clustering or dimensionality reduction based on a set of data examples
+    * Reinforcement (interactive): model interacts with an environment to, over time, improve performance of some function
+    * The pre-training part of models like BERT and GPT is typically unsupervised working on unlabelled data, whereas the fine-tuning (transfer learning) part is typically supervised, working on labeled data (e.g. 0: not equivalent, 1: equivalent).
 * [Dataset](https://huggingface.co/docs/datasets/en/index): data divided into the parts below. See [MLU-Explain > The Importance of Data Splitting](https://mlu-explain.github.io/train-test-validation/) for a good interactive explanation/visualisation.
   * Training data (`train`): train/teach the model via inputs and expected/correct outputs.
     * Output is in the form of model weights (logits?) 
