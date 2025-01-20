@@ -14,7 +14,11 @@ pip install evaluate
 
 # Machine Learning (ML) / Hugging Face Terminology
 
-* [Task](https://huggingface.co/tasks) (generic): the task to be performed / problem to be solved. Examples: natural language processing (NLP), text-to-image (and vice versa), etc.
+* [Task](https://huggingface.co/tasks) (generic): the task to be performed / problem to be solved.
+  * Types:
+     * Classification: predict to which class an example belongs
+     * Regression: predict a numeric value 
+  * Examples: natural language processing (NLP), text-to-image (and vice versa), etc.
   * [Hugging Face Task / pipeline Type](https://huggingface.co/docs/hub/en/models-tasks): "Tasks, or pipeline types, describe the “shape” of each model’s API (inputs and outputs) and are used to determine which Inference API and widget we want to display for any given model."
 * [Model](https://learn.microsoft.com/en-us/windows/ai/windows-ml/what-is-a-machine-learning-model): a neural network that will perform a task.
   * [Transformer](https://huggingface.co/docs/transformers/en/index): an ML model based on the [Transformer](https://research.google/blog/transformer-a-novel-neural-network-architecture-for-language-understanding/) architecture (from 2017 paper "Attention Is All You Need" by Vaswani et al.) that can be applied to multiple modalities. Most modern models are Transformer-based.
