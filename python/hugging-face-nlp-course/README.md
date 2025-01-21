@@ -16,7 +16,7 @@ pip install evaluate
 
 * [Task](https://huggingface.co/tasks) (generic): the task to be performed / problem to be solved.
   * Types:
-     * Classification: predict to which class an example belongs
+     * Classification: predict to which class an example belongs (which label does it have?)
      * Regression: predict a numeric value 
   * Examples: natural language processing (NLP), text-to-image (and vice versa), etc.
   * [Hugging Face Task / pipeline Type](https://huggingface.co/docs/hub/en/models-tasks): "Tasks, or pipeline types, describe the “shape” of each model’s API (inputs and outputs) and are used to determine which Inference API and widget we want to display for any given model."
