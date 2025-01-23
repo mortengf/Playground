@@ -19,8 +19,8 @@ This section was initially created from the [Hugging Face NLP Course](https://hu
   * Types:
      * Classification: predict to which class an example belongs (which label does it have, e.g. 0: "not equivalent", 1: "equivalent"?)
        * Examples:
-         * Natural language processing (NLP), e.g. sentiment analysis, document classification/summarization, etc.
-         * Image recognition (image-to-text) and text-to-image
+         * Natural Language Processing (NLP), e.g. sentiment analysis, document classification/summarization, etc.
+         * Image recognition (image-to-text) and image generation (text-to-image)
          * Disease diagnosis
      * Regression: predict a numeric value, e.g. predicting house prices, weather forecasts, GDP growth, etc.
   * [Hugging Face Task / pipeline Type](https://huggingface.co/docs/hub/en/models-tasks): "Tasks, or pipeline types, describe the “shape” of each model’s API (inputs and outputs) and are used to determine which Inference API and widget we want to display for any given model."
