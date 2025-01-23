@@ -25,7 +25,8 @@ pip install evaluate
     * Large Language Model (LLM): a model specifically designed and trained for natural language (text) processing tasks. Examples: [BERT (Google)](https://huggingface.co/docs/transformers/en/model_doc/bert), [DistilBERT (Hugging Face)](https://huggingface.co/docs/transformers/en/model_doc/distilbert) and [GPT (OpenAI)](https://huggingface.co/docs/transformers/en/model_doc/openai-gpt)
     * Text-to-image examples: DALL-E, Stable Diffusion, Imagen, etc.
 * [Paradigm/approach](https://www.wolfram.com/language/introduction-machine-learning/machine-learning-paradigms/):
-    * Supervised: model learns (train a predictive model) from a set of input (feature)-output pairs (examples) to predict an output value (label) for a new, unseen input.
+    * Supervised: model learns (a predictive model is trained) from a set of input (feature)-output pairs (examples) to predict an output value (label) for a new, unseen input.
+       * For classification tasks, you could say "training a classifier"
     * Unsupervised: perform e.g. clustering, dimensionality reduction, imputation (fill in the gaps) or generative modeling based on a set of unlabelled examples
     * Reinforcement (interactive): model interacts with an environment and over time learns a policy (via rewards) to improve the performance of some function.
     * The pre-training part of models like BERT and GPT is typically unsupervised working on unlabelled data, whereas the fine-tuning (transfer learning) part is typically supervised, working on labeled data (e.g. 0: not equivalent, 1: equivalent).
