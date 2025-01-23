@@ -21,12 +21,12 @@ pip install evaluate
   * Examples: natural language processing (NLP), text-to-image (and vice versa), etc.
   * [Hugging Face Task / pipeline Type](https://huggingface.co/docs/hub/en/models-tasks): "Tasks, or pipeline types, describe the “shape” of each model’s API (inputs and outputs) and are used to determine which Inference API and widget we want to display for any given model."
 * [Model](https://learn.microsoft.com/en-us/windows/ai/windows-ml/what-is-a-machine-learning-model): a neural network that will perform a task.
+  * For classification, "classifier"
   * [Transformer](https://huggingface.co/docs/transformers/en/index): an ML model based on the [Transformer](https://research.google/blog/transformer-a-novel-neural-network-architecture-for-language-understanding/) architecture (from 2017 paper "Attention Is All You Need" by Vaswani et al.) that can be applied to multiple modalities. Most modern models are Transformer-based.
     * Large Language Model (LLM): a model specifically designed and trained for natural language (text) processing tasks. Examples: [BERT (Google)](https://huggingface.co/docs/transformers/en/model_doc/bert), [DistilBERT (Hugging Face)](https://huggingface.co/docs/transformers/en/model_doc/distilbert) and [GPT (OpenAI)](https://huggingface.co/docs/transformers/en/model_doc/openai-gpt)
     * Text-to-image examples: DALL-E, Stable Diffusion, Imagen, etc.
 * [Paradigm/approach](https://www.wolfram.com/language/introduction-machine-learning/machine-learning-paradigms/):
     * Supervised: model learns (a predictive model is trained) from a set of input (feature)-output pairs (examples) to predict an output value (label) for a new, unseen input.
-       * For classification tasks, you could say "training a classifier"
     * Unsupervised: perform e.g. clustering, dimensionality reduction, imputation (fill in the gaps) or generative modeling based on a set of unlabelled examples
     * Reinforcement (interactive): model interacts with an environment and over time learns a policy (via rewards) to improve the performance of some function.
     * Transfer learning: transfer "knowledge" (through the layers of one or more neural networks? Deep Learning?) from a "broad"/generic task trained on large (unstructured) data set to a more specific downstream task trained on more specific (structured) data sets.
