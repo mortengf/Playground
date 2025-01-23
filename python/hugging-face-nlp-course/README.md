@@ -18,8 +18,11 @@ This section was initially created from the [Hugging Face NLP Course](https://hu
 * [Task](https://huggingface.co/tasks) (generic): the task to be performed / problem to be solved.
   * Types:
      * Classification: predict to which class an example belongs (which label does it have, e.g. 0: "not equivalent", 1: "equivalent"?)
-     * Regression: predict a numeric value 
-  * Examples: natural language processing (NLP), text-to-image (and vice versa), etc.
+       * Examples:
+         * Natural language processing (NLP), e.g. sentiment analysis, document classification/summarization, etc.
+         * Image recognition (image-to-text) and text-to-image
+         * Disease diagnosis
+     * Regression: predict a numeric value, e.g. predicting house prices, weather forecasts, GDP growth, etc.
   * [Hugging Face Task / pipeline Type](https://huggingface.co/docs/hub/en/models-tasks): "Tasks, or pipeline types, describe the “shape” of each model’s API (inputs and outputs) and are used to determine which Inference API and widget we want to display for any given model."
 * [Model](https://learn.microsoft.com/en-us/windows/ai/windows-ml/what-is-a-machine-learning-model): a neural network that will perform a task.
   * For classification, "classifier"
