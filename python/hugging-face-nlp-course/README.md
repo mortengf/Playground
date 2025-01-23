@@ -27,7 +27,7 @@ pip install evaluate
 * [Paradigm/approach](https://www.wolfram.com/language/introduction-machine-learning/machine-learning-paradigms/):
     * Supervised: model learns (train a predictive model) from a set of input (feature)-output pairs (examples) to predict an output value (label) for a new, unseen input.
     * Unsupervised: perform e.g. clustering, dimensionality reduction, imputation (fill in the gaps) or generative modeling based on a set of unlabelled examples
-    * Reinforcement (interactive): model interacts with an environment to, over time, improve performance of some function
+    * Reinforcement (interactive): model interacts with an environment and over time learns a policy (via rewards) to improve the performance of some function.
     * The pre-training part of models like BERT and GPT is typically unsupervised working on unlabelled data, whereas the fine-tuning (transfer learning) part is typically supervised, working on labeled data (e.g. 0: not equivalent, 1: equivalent).
 * [Dataset](https://huggingface.co/docs/datasets/en/index): data divided into the parts below. See [MLU-Explain > The Importance of Data Splitting](https://mlu-explain.github.io/train-test-validation/) for a good interactive explanation/visualisation.
   * Training data (`train`): train/teach the model via inputs and expected/correct outputs.
