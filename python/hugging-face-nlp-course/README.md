@@ -19,7 +19,7 @@ This section was initially created from the [Hugging Face NLP Course](https://hu
   * Types:
      * Classification: predict to which class an example belongs (which label does it have, e.g. 0: "not equivalent", 1: "equivalent"?)
        * Examples:
-         * Natural Language Processing (NLP), e.g. sentiment analysis, document classification/summarization, etc.
+         * Natural Language Processing (NLP), e.g. text classification/summarization, sentiment analysis, etc.
          * Image recognition (image-to-text) and image generation (text-to-image)
          * Disease diagnosis
      * Regression: predict a numeric value, e.g. predicting house prices, weather forecasts, GDP growth, etc.
