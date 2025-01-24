@@ -13,7 +13,7 @@ pip install evaluate
 ```
 
 # Machine Learning (ML) / Hugging Face Terminology
-This section was initially created from the [Hugging Face NLP Course](https://huggingface.co/learn/nlp-course/), but has since been expanded with information from various other sources.
+This section was initially created from the [Hugging Face NLP Course](https://huggingface.co/learn/nlp-course/), but has since been expanded with information from various other sources to encompass Machine Learning terminology more broadly.
 
 * [Task](https://huggingface.co/tasks) (generic): the task to be performed / problem to be solved.
   * Types:
