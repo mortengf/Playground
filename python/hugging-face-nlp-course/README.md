@@ -23,6 +23,11 @@ This section was initially created from the [Hugging Face NLP Course](https://hu
          * Image recognition (image-to-text) and image generation (text-to-image)
          * Disease diagnosis
      * Regression: predict a numeric value, e.g. predicting house prices, weather forecasts, GDP growth, etc.
+     * Reasoning: infer/deduce/derive conclusions beyond surface-level pattern recognition
+       * Examples:
+         * Natural Language Inference (NLI), e.g. is a hypothesis entailed/contradicted by a premise.
+         * Multi-Hop Question Answering (QA): combine information from multiple sources and apply reasoning across multiple steps
+         * Theorem Proving: prove mathematical theorems or verify logical statements based on a set of axioms and rules
   * [Hugging Face Task / pipeline Type](https://huggingface.co/docs/hub/en/models-tasks): "Tasks, or pipeline types, describe the “shape” of each model’s API (inputs and outputs) and are used to determine which Inference API and widget we want to display for any given model."
 * [Model](https://learn.microsoft.com/en-us/windows/ai/windows-ml/what-is-a-machine-learning-model): a neural network that will perform a task.
   * For classification, "model" ~ "classifier"
