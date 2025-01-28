@@ -26,8 +26,8 @@ Many tasks probably involve multiple paradigms, but are listed below under only 
          * Image Generation (text-to-image) and image recognition (image-to-text)
          * Disease Diagnosis/Drug Design
       * **Regression**: predict continuous, numeric values, e.g. house prices, weather forecasts, GDP growth, etc.
-    * Self-Supervised Learning: train a model on labeled data, predict the missing labels, then train on the full dataset, predict the missing labels again, and so on
-    * Semi-Supervised Learning: TODO: add description
+    * Self-Supervised Learning: TODO: add description
+    * Semi-Supervised Learning: train a model on labeled data, predict the missing labels, then train on the full dataset, predict the missing labels again, and so on.
     * **Unsupervised**: find patterns in unlabelled (unstructured) data.
       * Clustering: group similar items together without predefined labels, e.g. anomaly detection
       * Dimensionality Reduction: reduce the number of input features while preserving essential information
