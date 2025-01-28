@@ -25,17 +25,17 @@ Many tasks probably involve multiple paradigms, but are listed below under their
          * Natural Language Processing (NLP), e.g. text generation/classification/summarization, sentiment analysis, translation, text-to-speech/speech-to-text, etc.
          * Image generation (text-to-image) and image recognition (image-to-text)
          * Disease diagnosis
-      * **Regression**: predict a continuous, numeric value, e.g. predicting house prices, weather forecasts, GDP growth, etc.
+      * **Regression**: predict continuous, numeric values, e.g. house prices, weather forecasts, GDP growth, etc.
     * Self-Supervised Learning: TODO: add description
     * Semi-Supervised Learning: TODO: add description
-    * **Unsupervised**: find patterns in unstructured/unlabelled data.
+    * **Unsupervised**: find patterns in unlabelled (unstructured) data.
       * Clustering: group similar items together without predefined labels, e.g. anomaly detection
       * Dimensionality Reduction: reduce the number of input features while preserving essential information
       * Imputation (fill in the gaps)
       * Generative modeling, e.g. Generative Adversarial Networks (GANs).
       * Computer Vision: process visual data, e.g. for self-driving cars or medical imaging
    * **Reinforcement Learning**: model interacts with an environment and over time learns a policy (via rewards) to improve the performance of some function.
-     * Examples: Chess, Go, StarCraft, robot navigation
+     * Examples: Chess, Go, StarCraft, robot movement
    * **Transfer Learning**: transfer "knowledge" (through the layers of a neural network, aka Deep Learning?) from a "broad"/generic task trained on large (unstructured) data set to a more specific downstream task trained on more specific (structured) data sets.
      * The **pre-training** part of models like BERT and GPT is typically unsupervised working on unlabelled data, whereas the fine-tuning (transfer learning) part is typically supervised, working on labeled data.
    * **Reasoning**: infer/deduce/derive conclusions beyond surface-level pattern recognition
