@@ -23,7 +23,7 @@ It seems that various sources, e.g. ChatGPT and Wolfram Alpha do not provide a c
          * Natural Language Processing (NLP), e.g. text generation/classification/summarization, sentiment analysis, translation, text-to-speech/speech-to-text, etc.
          * Image generation (text-to-image) and image recognition (image-to-text)
          * Disease diagnosis
-      * **Regression**: predict a numeric value, e.g. predicting house prices, weather forecasts, GDP growth, etc.
+      * **Regression**: predict a continuous, numeric value, e.g. predicting house prices, weather forecasts, GDP growth, etc.
     * **Unsupervised**: find patterns in unstructured/unlabelled data.
       * Clustering: group similar items together without predefined labels, e.g. anomaly detection
       * Dimensionality Reduction: reduce the number of input features while preserving essential information
