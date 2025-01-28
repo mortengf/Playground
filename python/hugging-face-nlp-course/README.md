@@ -20,24 +20,24 @@ It seems that various sources, e.g. ChatGPT and Wolfram Alpha do not provide a c
 Many tasks probably involve multiple paradigms, but are listed below under their "main" paradigm for simplicity.
 
 * [Tasks](https://huggingface.co/tasks) & [paradigms](https://www.wolfram.com/language/introduction-machine-learning/machine-learning-paradigms/): the task to be performed / problem to be solved:
-    * **Supervised**: model learns (a predictive model is trained) from a set of input (feature)-output pairs (examples) to predict an output value (label) for a new, unseen input.
+    * **Supervised**: predict, from a set of input (feature)-output pairs (examples), output values (labels) for new unseen inputs.
       * **Classification**: predict to which class an example belongs (which label does it have, e.g. 0: "not equivalent", 1: "equivalent"?). Examples:
          * Natural Language Processing (NLP), e.g. text generation/classification/summarization, sentiment analysis, translation, text-to-speech/speech-to-text, etc.
          * Image generation (text-to-image) and image recognition (image-to-text)
          * Disease diagnosis
       * **Regression**: predict a continuous, numeric value, e.g. predicting house prices, weather forecasts, GDP growth, etc.
+    * Self-Supervised Learning: TODO: add description
+    * Semi-Supervised Learning: TODO: add description
     * **Unsupervised**: find patterns in unstructured/unlabelled data.
       * Clustering: group similar items together without predefined labels, e.g. anomaly detection
       * Dimensionality Reduction: reduce the number of input features while preserving essential information
       * Imputation (fill in the gaps)
       * Generative modeling, e.g. Generative Adversarial Networks (GANs).
       * Computer Vision: process visual data, e.g. for self-driving cars or medical imaging
-   * Semi-Supervised Learning: TODO: add description
-   * Self-Supervised Learning: TODO: add description
    * **Reinforcement Learning**: model interacts with an environment and over time learns a policy (via rewards) to improve the performance of some function.
      * Examples: Chess, Go, StarCraft, robot navigation
-   * Transfer learning: transfer "knowledge" (through the layers of one or more neural networks? Deep Learning?) from a "broad"/generic task trained on large (unstructured) data set to a more specific downstream task trained on more specific (structured) data sets.
-     * The pre-training part of models like BERT and GPT is typically unsupervised working on unlabelled data, whereas the fine-tuning (transfer learning) part is typically supervised, working on labeled data.
+   * **Transfer Learning**: transfer "knowledge" (through the layers of a neural network, aka Deep Learning?) from a "broad"/generic task trained on large (unstructured) data set to a more specific downstream task trained on more specific (structured) data sets.
+     * The **pre-training** part of models like BERT and GPT is typically unsupervised working on unlabelled data, whereas the fine-tuning (transfer learning) part is typically supervised, working on labeled data.
    * **Reasoning**: infer/deduce/derive conclusions beyond surface-level pattern recognition
      * Examples:
        * Natural Language Inference (NLI), e.g. is a hypothesis entailed/contradicted by a premise.
