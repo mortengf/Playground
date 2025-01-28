@@ -17,6 +17,8 @@ This section was initially created from the [Hugging Face NLP Course](https://hu
 
 It seems that various sources, e.g. ChatGPT and Wolfram Alpha do not provide a clear distinction between the concepts of "tasks" and "paradigms", so I decided to categorise tasks by paradigm :)
 
+Many tasks probably involve multiple paradigms, but are listed below under their "main" paradigm for simplicity.
+
 * [Tasks](https://huggingface.co/tasks) & [paradigms](https://www.wolfram.com/language/introduction-machine-learning/machine-learning-paradigms/): the task to be performed / problem to be solved:
     * **Supervised**: model learns (a predictive model is trained) from a set of input (feature)-output pairs (examples) to predict an output value (label) for a new, unseen input.
       * **Classification**: predict to which class an example belongs (which label does it have, e.g. 0: "not equivalent", 1: "equivalent"?). Examples:
