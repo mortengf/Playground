@@ -17,14 +17,14 @@ This section was initially created from the [Hugging Face NLP Course](https://hu
 
 It seems that various sources, e.g. ChatGPT and Wolfram Alpha do not provide a clear distinction between the concepts of "tasks" and "paradigms", so I decided to categorise tasks by paradigm :)
 
-Many tasks probably involve multiple paradigms, but are listed below under their "main" paradigm for simplicity.
+Many tasks probably involve multiple paradigms, but are listed below under only one paradigm for simplicity.
 
 * [Tasks](https://huggingface.co/tasks) & [paradigms](https://www.wolfram.com/language/introduction-machine-learning/machine-learning-paradigms/): the task to be performed / problem to be solved:
     * **Supervised**: predict, from a set of input (feature)-output pairs (examples), output values (labels) for new unseen inputs.
       * **Classification**: predict to which class an example belongs (which label does it have, e.g. 0: "not equivalent", 1: "equivalent"?). Examples:
          * Natural Language Processing (NLP), e.g. text generation/classification/summarization, sentiment analysis, translation, text-to-speech/speech-to-text, etc.
-         * Image generation (text-to-image) and image recognition (image-to-text)
-         * Disease diagnosis
+         * Image Generation (text-to-image) and image recognition (image-to-text)
+         * Disease Diagnosis/Drug Design
       * **Regression**: predict continuous, numeric values, e.g. house prices, weather forecasts, GDP growth, etc.
     * Self-Supervised Learning: TODO: add description
     * Semi-Supervised Learning: TODO: add description
@@ -53,7 +53,8 @@ Many tasks probably involve multiple paradigms, but are listed below under their
     * Reinforcement Learning: Agent or Policy Model (e.g., Q-Learning Agent, Policy Network)
   * [Transformer](https://huggingface.co/docs/transformers/en/index): an ML model based on the [Transformer](https://research.google/blog/transformer-a-novel-neural-network-architecture-for-language-understanding/) architecture (from 2017 paper "Attention Is All You Need" by Vaswani et al.) that can be applied to multiple modalities. Most modern models are Transformer-based.
     * Large Language Model (LLM): a model specifically designed and trained for natural language (text) processing tasks. Examples: [BERT (Google)](https://huggingface.co/docs/transformers/en/model_doc/bert), [DistilBERT (Hugging Face)](https://huggingface.co/docs/transformers/en/model_doc/distilbert) and [GPT (OpenAI)](https://huggingface.co/docs/transformers/en/model_doc/openai-gpt)
-    * Text-to-image examples: DALL-E, Stable Diffusion, Imagen, etc.
+    * Text-to-image examples: DALL-E (OpenAI), Midjourney, Stable Diffusion (Stability AI), Google DeepMind, etc.
+    * Drug Design example: AlphaFold: inference of the structure of a protein from its amino acid sequence
 * [Datasets](https://huggingface.co/docs/datasets/en/index): data divided into the parts below. See [MLU-Explain > The Importance of Data Splitting](https://mlu-explain.github.io/train-test-validation/) for a good interactive explanation/visualisation.
   * Training data (`train`): train/teach the model via inputs and expected/correct outputs.
     * Output is in the form of model weights (logits?) 
