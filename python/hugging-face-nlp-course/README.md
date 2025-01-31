@@ -62,11 +62,11 @@ Many tasks probably involve multiple paradigms, but are listed below under only 
     * Drug Design example: [AlphaFold](https://deepmind.google/technologies/alphafold/) (Google DeepMind): inference of the structure of a protein from its amino acid sequence
   * Other types: ...
   * Model "alias terms":
-    * Classification: classifier
-    * Regression: regressor
-    * Clustering: K-Means, Gaussian Mixture Model
-    * Dimensionality Reduction: Embedding model or Dimensionality Reducer (e.g., PCA, t-SNE)
-    * Reinforcement Learning: Agent or Policy Model (e.g., Q-Learning Agent, Policy Network)
+    * Classification: Classifier
+    * Regression: Regressor
+    * Clustering: Clusterer
+    * Dimensionality Reduction: Feature Extractor or Dimensionality Reducer
+    * Reinforcement Learning: Agent or Policy Model
 * [Datasets](https://huggingface.co/docs/datasets/en/index): data divided into the parts below. See [MLU-Explain > The Importance of Data Splitting](https://mlu-explain.github.io/train-test-validation/) for a good interactive explanation/visualisation.
   * Training data (`train`): train/teach the model via inputs and expected/correct outputs.
     * Output is in the form of model weights (logits?) 
