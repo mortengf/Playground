@@ -54,8 +54,12 @@ Many tasks probably involve multiple paradigms, but are listed below under only 
       * [Claude](https://www.anthropic.com/claude) (Anthropic)
       * [Mistral](https://mistral.ai/)
       * [DeepSeek](https://github.com/deepseek-ai/DeepSeek-LLM)
-    * Text-to-image examples: DALL-E (OpenAI), Midjourney, Stable Diffusion (Stability AI), Google DeepMind, etc.
-    * Drug Design example: AlphaFold: inference of the structure of a protein from its amino acid sequence
+    * Text-to-image examples:
+      * [DALL-E](https://openai.com/index/dall-e-2/) (OpenAI)
+      * [Midjourney](https://www.midjourney.com/home)
+      * [Stable Diffusion](https://stability.ai/stable-image) (Stability AI)
+      * [Imagen](https://deepmind.google/technologies/imagen-3/) (Google DeepMind)
+    * Drug Design example: [AlphaFold](https://deepmind.google/technologies/alphafold/) (Google DeepMind): inference of the structure of a protein from its amino acid sequence
   * Other types: ...
   * Model "alias terms":
     * Classification: classifier
