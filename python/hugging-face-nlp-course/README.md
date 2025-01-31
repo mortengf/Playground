@@ -64,6 +64,7 @@ Many tasks probably involve multiple paradigms, but are listed below under only 
   * Model "alias terms":
     * Classification: Classifier
     * Regression: Regressor
+    * Generative Models: Generator
     * Clustering: Clusterer
     * Dimensionality Reduction: Feature Extractor or Dimensionality Reducer
     * Reinforcement Learning: Agent or Policy Model
