@@ -45,16 +45,17 @@ Many tasks probably involve multiple paradigms, but are listed below under only 
        * Theorem Proving: prove mathematical theorems or verify logical statements based on a set of axioms and rules
   * [Hugging Face Task / pipeline Type](https://huggingface.co/docs/hub/en/models-tasks): "Tasks, or pipeline types, describe the “shape” of each model’s API (inputs and outputs) and are used to determine which Inference API and widget we want to display for any given model."
 * [Models](https://learn.microsoft.com/en-us/windows/ai/windows-ml/what-is-a-machine-learning-model): a neural network that will perform a task.
+  * [Transformer](https://huggingface.co/docs/transformers/en/index): an ML model based on the [Transformer](https://research.google/blog/transformer-a-novel-neural-network-architecture-for-language-understanding/) architecture (from 2017 paper "Attention Is All You Need" by Vaswani et al.) that can be applied to multiple modalities. Most modern models are Transformer-based.
+    * Large Language Model (LLM): a model specifically designed and trained for natural language (text) processing tasks. Examples: [BERT](https://huggingface.co/docs/transformers/en/model_doc/bert) (Google), [DistilBERT](https://huggingface.co/docs/transformers/en/model_doc/distilbert) (Hugging Face), [GPT](https://huggingface.co/docs/transformers/en/model_doc/openai-gpt) (OpenAI) and [DeepSeek LLM](https://github.com/deepseek-ai/DeepSeek-LLM).
+    * Text-to-image examples: DALL-E (OpenAI), Midjourney, Stable Diffusion (Stability AI), Google DeepMind, etc.
+    * Drug Design example: AlphaFold: inference of the structure of a protein from its amino acid sequence
+  * Other types: ...
   * Model "alias terms":
     * Classification: classifier
     * Regression: regressor
     * Clustering: K-Means, Gaussian Mixture Model
     * Dimensionality Reduction: Embedding model or Dimensionality Reducer (e.g., PCA, t-SNE)
     * Reinforcement Learning: Agent or Policy Model (e.g., Q-Learning Agent, Policy Network)
-  * [Transformer](https://huggingface.co/docs/transformers/en/index): an ML model based on the [Transformer](https://research.google/blog/transformer-a-novel-neural-network-architecture-for-language-understanding/) architecture (from 2017 paper "Attention Is All You Need" by Vaswani et al.) that can be applied to multiple modalities. Most modern models are Transformer-based.
-    * Large Language Model (LLM): a model specifically designed and trained for natural language (text) processing tasks. Examples: [BERT](https://huggingface.co/docs/transformers/en/model_doc/bert) (Google), [DistilBERT](https://huggingface.co/docs/transformers/en/model_doc/distilbert) (Hugging Face), [GPT](https://huggingface.co/docs/transformers/en/model_doc/openai-gpt) (OpenAI) and [DeepSeek LLM](https://github.com/deepseek-ai/DeepSeek-LLM).
-    * Text-to-image examples: DALL-E (OpenAI), Midjourney, Stable Diffusion (Stability AI), Google DeepMind, etc.
-    * Drug Design example: AlphaFold: inference of the structure of a protein from its amino acid sequence
 * [Datasets](https://huggingface.co/docs/datasets/en/index): data divided into the parts below. See [MLU-Explain > The Importance of Data Splitting](https://mlu-explain.github.io/train-test-validation/) for a good interactive explanation/visualisation.
   * Training data (`train`): train/teach the model via inputs and expected/correct outputs.
     * Output is in the form of model weights (logits?) 
