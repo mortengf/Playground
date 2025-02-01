@@ -47,13 +47,14 @@ Many tasks probably involve multiple paradigms, but are listed below under only 
 * [Models](https://learn.microsoft.com/en-us/windows/ai/windows-ml/what-is-a-machine-learning-model): a neural network that will perform a task.
   * [Transformer](https://huggingface.co/docs/transformers/en/index): an ML model based on the [Transformer](https://research.google/blog/transformer-a-novel-neural-network-architecture-for-language-understanding/) architecture (from 2017 paper "Attention Is All You Need" by Vaswani et al.) that can be applied to multiple modalities. Most modern models are Transformer-based.
     * Large Language Model (LLM): a model specifically designed and trained for natural language (text) processing tasks. Examples:
-      * [BERT](https://huggingface.co/docs/transformers/en/model_doc/bert) (Google), [DistilBERT](https://huggingface.co/docs/transformers/en/model_doc/distilbert) (Hugging Face) & [RoBERTa](https://huggingface.co/docs/transformers/en/model_doc/roberta) (Meta)
+      * [BERT](https://huggingface.co/docs/transformers/en/model_doc/bert) (Google) & [RoBERTa](https://huggingface.co/docs/transformers/en/model_doc/roberta) (Meta)
       * [GPT](https://huggingface.co/docs/transformers/en/model_doc/openai-gpt) (OpenAI) & [LLaMA](https://huggingface.co/docs/transformers/en/model_doc/llama) (Meta)
       * [T5](https://huggingface.co/docs/transformers/en/model_doc/t5) (Google)
       * [Gemini](https://deepmind.google/technologies/gemini/) (Google DeepMind)
       * [Claude](https://www.anthropic.com/claude) (Anthropic)
       * [Mistral](https://mistral.ai/)
       * [DeepSeek](https://github.com/deepseek-ai/DeepSeek-LLM)
+      * Hugging Face offer small ("distilled") versions of many models, e.g. [DistilBERT](https://huggingface.co/docs/transformers/en/model_doc/distilbert).
     * Text-to-image examples:
       * [DALL-E](https://openai.com/index/dall-e-2/) (OpenAI)
       * [Midjourney](https://www.midjourney.com/home)
