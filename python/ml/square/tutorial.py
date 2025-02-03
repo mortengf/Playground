@@ -159,3 +159,20 @@ for epoch in range(num_epochs):
 
     results.loc[len(results)] = new_row
     print(f"Epoch: {epoch+1}, Validation Loss: {total_loss/len(valid_loader)}")
+
+input_str = "espresso martini"
+input_ids = tokenizer.encode(input_str, return_tensors='pt').to(device)
+
+output = model.generate(
+    input_ids,
+    max_length=16,
+    num_return_sequences=1,
+    do_sample=True,
+    top_k=8,
+    top_p=0.95,
+    temperature=0.5,
+    repetition_penalty=1.2
+)
+
+decoded_output = tokenizer.decode(output[0], skip_special_tokens=True)
+print(decoded_output)
