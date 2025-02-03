@@ -7,7 +7,7 @@ https://developer.squareup.com/blog/how-to-train-your-own-genai-model/
 
 
 ```
-pip install torch 
+pip install torch
 pip install torchtext
 pip install transformers
 pip install sentencepiece
