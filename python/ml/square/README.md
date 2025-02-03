@@ -13,4 +13,8 @@ pip install transformers
 pip install sentencepiece
 pip install pandas
 pip install tqdm
+
+# Not mentioned in tutorial but seems necessary
+pip install datasets 
+pip install ipython
 ```
