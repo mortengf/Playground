@@ -134,13 +134,15 @@ See [MLU-Explain > The Importance of Data Splitting](https://mlu-explain.github.
 #### Training data (`train`)
 Train/teach the model via inputs and expected/correct outputs.
 
-Output is in the form of model weights (logits?).
+Primary outputs:
+* Loss: a scalar value representing how well the model performed on the training data
+* Model weights: learned parameters (bias)
 
 #### Validation (`validation`)
-Validation (and tweaking?) of the chosen model/hyper parameters/hidden units. Iterative step?
+Validation and tweaking of the chosen model/hyper parameters/hidden units. Performed iteratively.
 
 Output is in the form of accurracy/loss.
-    
+
 Sometimes (but not very often?) this data set is omitted.
 
 #### Evaluation/test (`test`)
