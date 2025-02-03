@@ -176,3 +176,5 @@ output = model.generate(
 
 decoded_output = tokenizer.decode(output[0], skip_special_tokens=True)
 print(decoded_output)
+
+torch.save(model, 'drinkGenGPT2.pt')
