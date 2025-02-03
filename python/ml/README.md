@@ -1,4 +1,4 @@
-# Machine Learning (ML) / Hugging Face Terminology
+# Machine Learning (ML) Terminology
 This section was initially created from the [Hugging Face NLP Course](https://huggingface.co/learn/nlp-course/), but has since been expanded with information from various other sources to encompass Machine Learning terminology more broadly.
 
 It seems that various sources, e.g. ChatGPT and Wolfram Alpha do not provide a clear distinction between the concepts of "tasks" and "paradigms", so I decided to categorise tasks by paradigm :)
