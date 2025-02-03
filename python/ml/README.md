@@ -16,12 +16,26 @@ Many tasks probably involve multiple paradigms, but are listed below under only 
 #### Paradigm: Supervised 
 Predict, from a set of input (feature)-output pairs (examples), output values (labels) for new unseen inputs.
 
-##### Examples
-* **Classification**: predict to which class an example belongs (which label does it have, e.g. 0: "not equivalent", 1: "equivalent"?). Examples:
-    * Natural Language Processing (NLP), e.g. text generation/classification/summarization, sentiment analysis, translation, text-to-speech/speech-to-text, etc.
-    * Image Generation (text-to-image) and image recognition (image-to-text)
-    * Disease Diagnosis/Drug Design
-* **Regression**: predict continuous, numeric values, e.g. house prices, weather forecasts, GDP growth, etc.
+The two most common supervised tasks are:
+* Classification
+* Regression
+
+##### Classification
+Predict to which class an example belongs (which label does it have, e.g. 0: "not equivalent", 1: "equivalent"?).
+
+###### Examples
+ * Natural Language Processing (NLP), e.g. text generation/classification/summarization, sentiment analysis, translation, text-to-speech/speech-to-text, etc.
+ * Image Generation (text-to-image) and image recognition (image-to-text)
+ * Disease Diagnosis/Drug Design
+
+##### Regression
+Predict continuous, numeric values.
+
+###### Examples
+* House prices
+* Weather forecasts
+* GDP growth
+* ...
 
 #### Paradigm: Self-Supervised Learning
 Obtain input-output pairs from the data itself.
@@ -91,7 +105,7 @@ A model specifically designed and trained for natural language (text) processing
 * [DeepSeek](https://github.com/deepseek-ai/DeepSeek-LLM)
 * Hugging Face offer small ("distilled") versions of many models, e.g. [DistilBERT](https://huggingface.co/docs/transformers/en/model_doc/distilbert).
 
-#### Text-to-image Model
+#### Text-to-image & Image-to-text Models
 TODO: add description
 
 ##### Examples
