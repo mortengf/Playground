@@ -1,17 +1,3 @@
-# Prerequisites: 
-
-* python 3
-* Install the following packages (via `pip`):
-
-
-```
-pip install "transformers[sentencepiece]"
-pip install transformers[torch]
-pip install torch torchvision #PyTorch
-pip install datasets
-pip install evaluate
-```
-
 # Machine Learning (ML) / Hugging Face Terminology
 This section was initially created from the [Hugging Face NLP Course](https://huggingface.co/learn/nlp-course/), but has since been expanded with information from various other sources to encompass Machine Learning terminology more broadly.
 
@@ -86,3 +72,4 @@ Many tasks probably involve multiple paradigms, but are listed below under only 
       * ...
     * Other:
       * ...
+
