@@ -7,9 +7,10 @@ https://developer.squareup.com/blog/how-to-train-your-own-genai-model/
 
 
 ```
-pip install "transformers[sentencepiece]"
-pip install transformers[torch]
-pip install torch torchvision #PyTorch
-pip install datasets
-pip install evaluate
+pip install torch 
+pip install torchtext
+pip install transformers
+pip install sentencepiece
+pip install pandas
+pip install tqdm
 ```
