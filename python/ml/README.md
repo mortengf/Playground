@@ -90,32 +90,39 @@ Examples:
 #### Large Language Models (LLMs)
 A model specifically designed and trained for natural language (text) processing tasks. 
 
-##### Examples
+Examples:
 * [BERT](https://huggingface.co/docs/transformers/en/model_doc/bert) (Google) & [RoBERTa](https://huggingface.co/docs/transformers/en/model_doc/roberta) (Meta)
 * [GPT](https://huggingface.co/docs/transformers/en/model_doc/openai-gpt) (OpenAI) & [LLaMA](https://huggingface.co/docs/transformers/en/model_doc/llama) (Meta)
 * [T5](https://huggingface.co/docs/transformers/en/model_doc/t5) (Google)
-* [Gemini](https://deepmind.google/technologies/gemini/) (Google DeepMind)
 * [Claude](https://www.anthropic.com/claude) (Anthropic)
 * [Mistral](https://mistral.ai/)
-* [DeepSeek](https://github.com/deepseek-ai/DeepSeek-LLM)
+* [DeepSeek LLM](https://github.com/deepseek-ai/DeepSeek-LLM) (DeepSeek)
 * Hugging Face offer small ("distilled") versions of many models, e.g. [DistilBERT](https://huggingface.co/docs/transformers/en/model_doc/distilbert).
 
-#### Text-to-image & Image-to-text Models
-TODO: add description
+#### Text-to-Image & Image-to-Text Models
+Generate images from text and create textual descriptions of (parts of) images via image recognition.
 
-##### Examples
+Examples:
 * [DALL-E](https://openai.com/index/dall-e-2/) (OpenAI)
 * [Midjourney](https://www.midjourney.com/home)
 * [Stable Diffusion](https://stability.ai/stable-image) (Stability AI)
 * [Imagen](https://deepmind.google/technologies/imagen-3/) (Google DeepMind)
 
+#### Reasoning Models
+* [o1](https://openai.com/o1/) (OpenAI)
+* [DeepSeek-R1](https://github.com/deepseek-ai/DeepSeek-R1) (DeepSeek)
+
+#### Multi-Modal Models
+* GPT-4o & GPT-4o Mini (OpenAI)
+* [Gemini](https://deepmind.google/technologies/gemini/) (Google DeepMind)
+
 #### Other Model Types
 
-##### Example: Drug Design
+##### Drug Design
 [AlphaFold](https://deepmind.google/technologies/alphafold/) (Google DeepMind): inference of the structure of a protein from its amino acid sequence.
 
-##### Example: ...
-TODO: add
+##### ...
+TODO: add example
 
 ## Data Sets
 
