@@ -43,3 +43,13 @@ def compute_review_length(example):
 drug_dataset = drug_dataset.map(compute_review_length)
 # Inspect the first training example
 print(drug_dataset["train"][0])
+
+three_shortest_reviews = drug_dataset["train"].sort("review_length")[:3]
+print(f"Three shortest reviews: {three_shortest_reviews}")
+
+drug_dataset = drug_dataset.filter(lambda x: x["review_length"] > 30)
+print(drug_dataset.num_rows)
+
+# Sorting descending causes the process to hang - why?
+#three_longest_reviews = drug_dataset["train"].sort("review_length", reverse=True)[:3]
+#print(f"Three longest reviews: {three_longest_reviews}")
