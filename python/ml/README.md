@@ -92,12 +92,12 @@ A model specifically designed and trained for natural language (text) processing
 
 Examples:
 * [BERT](https://huggingface.co/docs/transformers/en/model_doc/bert) (Google) & [RoBERTa](https://huggingface.co/docs/transformers/en/model_doc/roberta) (Meta)
+  * Hugging Face offer small ("distilled") versions of many models, e.g. [DistilBERT](https://huggingface.co/docs/transformers/en/model_doc/distilbert).
 * [GPT](https://huggingface.co/docs/transformers/en/model_doc/openai-gpt) (OpenAI) & [LLaMA](https://huggingface.co/docs/transformers/en/model_doc/llama) (Meta)
 * [T5](https://huggingface.co/docs/transformers/en/model_doc/t5) (Google)
-* [Claude](https://www.anthropic.com/claude) (Anthropic)
-* [Mistral](https://mistral.ai/)
 * [DeepSeek LLM](https://github.com/deepseek-ai/DeepSeek-LLM) (DeepSeek)
-* Hugging Face offer small ("distilled") versions of many models, e.g. [DistilBERT](https://huggingface.co/docs/transformers/en/model_doc/distilbert).
+
+See more models under "Multi-Modal & Reasoning Models" below.
 
 #### Text-to-Image & Image-to-Text Models
 * Text-to-image: generate images from text input
@@ -115,13 +115,13 @@ Generate videos from text input.
 * [Imagen](https://deepmind.google/technologies/imagen-3/) (Google DeepMind)
   * Can also handle images
 
-#### Reasoning Models
-* [o1](https://openai.com/o1/) (OpenAI)
-* [DeepSeek-R1](https://github.com/deepseek-ai/DeepSeek-R1) (DeepSeek)
-
-#### Multi-Modal Models
+#### Multi-Modal & Reasoning Models
 * [GPT-4o](https://openai.com/index/hello-gpt-4o/) & [GPT-4o Mini](https://openai.com/index/gpt-4o-mini-advancing-cost-efficient-intelligence/) (OpenAI)
+* [o1](https://openai.com/o1/) (OpenAI)
 * [Gemini](https://deepmind.google/technologies/gemini/) (Google DeepMind)
+* [Claude Haiku/Sonnet/Opus](https://www.anthropic.com/claude) (Anthropic)
+* [Pixtral](https://mistral.ai/en/news/pixtral-large) (Mistral)
+* [DeepSeek-R1](https://github.com/deepseek-ai/DeepSeek-R1) (DeepSeek)
 
 #### Other Model Types
 
