@@ -100,20 +100,27 @@ Examples:
 * Hugging Face offer small ("distilled") versions of many models, e.g. [DistilBERT](https://huggingface.co/docs/transformers/en/model_doc/distilbert).
 
 #### Text-to-Image & Image-to-Text Models
-Generate images from text and create textual descriptions of (parts of) images via image recognition.
+* Text-to-image: generate images from text input
+* Image-to-text: perform image recognition to create textual descriptions of images
 
 Examples:
 * [DALL-E](https://openai.com/index/dall-e-2/) (OpenAI)
 * [Midjourney](https://www.midjourney.com/home)
 * [Stable Diffusion](https://stability.ai/stable-image) (Stability AI)
+
+#### Text-to-Video Models
+Generate videos from text input.
+
+* [Sora](https://openai.com/index/sora/) (OpenAI)
 * [Imagen](https://deepmind.google/technologies/imagen-3/) (Google DeepMind)
+  * Can also handle images
 
 #### Reasoning Models
 * [o1](https://openai.com/o1/) (OpenAI)
 * [DeepSeek-R1](https://github.com/deepseek-ai/DeepSeek-R1) (DeepSeek)
 
 #### Multi-Modal Models
-* GPT-4o & GPT-4o Mini (OpenAI)
+* [GPT-4o](https://openai.com/index/hello-gpt-4o/) & [GPT-4o Mini](https://openai.com/index/gpt-4o-mini-advancing-cost-efficient-intelligence/) (OpenAI)
 * [Gemini](https://deepmind.google/technologies/gemini/) (Google DeepMind)
 
 #### Other Model Types
