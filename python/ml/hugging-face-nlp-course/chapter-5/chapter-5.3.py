@@ -26,3 +26,11 @@ print(f"Number of unique 'training' conditions {len(drug_dataset['train'].unique
 
 print(f"Number of unique 'test' drug names {len(drug_dataset['test'].unique('drugName'))}")
 print(f"Number of unique 'test' conditions {len(drug_dataset['test'].unique('condition'))}")
+
+drug_dataset = drug_dataset.filter(lambda x: x["condition"] is not None)
+
+def lowercase_condition(example):
+    return {"condition": example["condition"].lower()}
+drug_dataset.map(lowercase_condition)
+
+print(drug_dataset["train"]["condition"][:3])
