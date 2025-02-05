@@ -27,10 +27,19 @@ print(f"Number of unique 'training' conditions {len(drug_dataset['train'].unique
 print(f"Number of unique 'test' drug names {len(drug_dataset['test'].unique('drugName'))}")
 print(f"Number of unique 'test' conditions {len(drug_dataset['test'].unique('condition'))}")
 
+# Avoid AttributeError: 'NoneType' object has no attribute 'lower'
 drug_dataset = drug_dataset.filter(lambda x: x["condition"] is not None)
 
+# normalize "condition" column
 def lowercase_condition(example):
     return {"condition": example["condition"].lower()}
 drug_dataset.map(lowercase_condition)
-
 print(drug_dataset["train"]["condition"][:3])
+
+# Add new column to data set: "review_length"
+def compute_review_length(example):
+    return {"review_length": len(example["review"].split())}
+
+drug_dataset = drug_dataset.map(compute_review_length)
+# Inspect the first training example
+print(drug_dataset["train"][0])
