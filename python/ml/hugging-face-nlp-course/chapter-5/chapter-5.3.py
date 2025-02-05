@@ -21,5 +21,8 @@ drug_dataset = drug_dataset.rename_column(
 )
 print(drug_dataset)
 
-print(f"Number of unique drug names {len(drug_dataset['train'].unique('drugName'))}")
-print(f"Number of unique conditions {len(drug_dataset['train'].unique('condition'))}")
+print(f"Number of unique 'training' drug names {len(drug_dataset['train'].unique('drugName'))}")
+print(f"Number of unique 'training' conditions {len(drug_dataset['train'].unique('condition'))}")
+
+print(f"Number of unique 'test' drug names {len(drug_dataset['test'].unique('drugName'))}")
+print(f"Number of unique 'test' conditions {len(drug_dataset['test'].unique('condition'))}")
