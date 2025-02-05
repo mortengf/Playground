@@ -2,6 +2,7 @@
 # unzip drugsCom_raw.zip
 
 from datasets import load_dataset
+import html
 
 data_files = {"train": "drugsComTrain_raw.tsv", "test": "drugsComTest_raw.tsv"}
 # \t is the tab character in Python
@@ -53,3 +54,13 @@ print(drug_dataset.num_rows)
 # Sorting descending causes the process to hang - why?
 #three_longest_reviews = drug_dataset["train"].sort("review_length", reverse=True)[:3]
 #print(f"Three longest reviews: {three_longest_reviews}")
+
+# Remove HTML - slow way
+drug_dataset = drug_dataset.map(lambda x: {"review": html.unescape(x["review"])})
+print(drug_dataset["train"][0])
+
+# Remove HTML - fast way
+new_drug_dataset = drug_dataset.map(
+    lambda x: {"review": [html.unescape(o) for o in x["review"]]}, batched=True
+)
+print(new_drug_dataset["train"][0])
