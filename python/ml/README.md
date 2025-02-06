@@ -16,6 +16,8 @@ Many tasks probably involve multiple paradigms, but are listed below under only 
 #### Paradigm: Supervised 
 Predict, from a set of input (feature)-output pairs (examples), output values (labels) for new unseen inputs.
 
+The term "supervised" comes from the fact that the labels (correct outputs) are "guiding" aka "supervising" the model (during fine-tuning).
+
 The two most common supervised tasks are:
 * Classification
 * Regression
