@@ -1,7 +1,7 @@
-using System;
+﻿using System;
 using System.IO;
 
-public class CalculateMaximumPathLength
+public class Program
 {
 	static string _MaxPath = "";
 
