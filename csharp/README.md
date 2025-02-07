@@ -24,3 +24,5 @@ In the project folder:
 ```
 dotnet run
 ```
+
+The project is automatically built beforehand.
