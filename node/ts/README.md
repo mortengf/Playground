@@ -2,7 +2,7 @@
 * Install Node.js
 * Install typescript: `npm install -g typescript`
 
-# Compile TypeScript to JavaScript
+# Transpile TypeScript to JavaScript
 ```
 tsc <filename.ts>
 ```
