@@ -23,7 +23,7 @@ The two most common supervised tasks are:
 * Regression
 
 ##### Classification
-Predict to which class an example belongs (which label does it have, e.g. 0: "not equivalent", 1: "equivalent"?).
+Predict, with some probability, to which class an example belongs (which label does it have, e.g. 0: "not equivalent", 1: "equivalent"?).
 
 Examples:
  * Natural Language Processing (NLP), e.g. text generation/classification/summarization, sentiment analysis, translation, text-to-speech/speech-to-text, etc.
