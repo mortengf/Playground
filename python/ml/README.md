@@ -80,15 +80,13 @@ Examples:
 * [Neural Network](https://en.wikipedia.org/wiki/Neural_network_(machine_learning)): an ML model inspired by the structure and function of biological neural networks in animal brains
 
 #### Deep Learning
-Deep Learning is a technique that can be applied within each learning paradigm.
-
-The term "deep" in "Deep Neural Network" (DNN) refers to the multiple/many layers in the neural network that are used for training. For example, in supervised deep learning, a DNN is trained with labeled data using backpropagation and gradient descent.
+Deep Learning is a technique that can be applied within each learning paradigm. The term "deep" in "Deep Neural Network" (DNN) refers to the multiple/many layers in the neural network that are used for training.
 
 Examples of DNNs are:
 
 * [Transformer](https://huggingface.co/docs/transformers/en/index): an ML model based on the [Transformer](https://research.google/blog/transformer-a-novel-neural-network-architecture-for-language-understanding/) architecture (from 2017 paper "Attention Is All You Need" by Vaswani et al.) that can be applied to multiple modalities. Most modern models are Transformer-based.
-* [Convolutional Neural Networks](https://en.wikipedia.org/wiki/Convolutional_neural_network) (CNNs): a regularized type of feedforward neural network that learns features by itself via filter (or kernel) optimization
-* Generative Adversarial Networks (GANs): a class of machine learning frameworks and a prominent framework for approaching generative artificial intelligence where two neural networks contest with each other in the form of a zero-sum game, where one agent's gain is another agent's loss.
+* [Convolutional Neural Networks](https://en.wikipedia.org/wiki/Convolutional_neural_network) (CNNs)
+* [Generative Adversarial Networks](https://en.wikipedia.org/wiki/Generative_adversarial_network) (GANs)
 
 #### Model "alias terms"
 * Classification: Classifier
