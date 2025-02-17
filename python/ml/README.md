@@ -61,7 +61,7 @@ Model interacts with an environment and over time learns a policy (via rewards) 
 Examples: Chess, Go, StarCraft, robot movement, etc.
 
 #### Paradigm: Transfer Learning
-Transfer "knowledge" (through the layers of a neural network, aka Deep Learning?) from a "broad"/generic task trained on large (unstructured) data set to a more specific downstream task trained on more specific (structured) data sets.
+Transfer "knowledge" (weights?) from a "broad"/generic task trained on large (unstructured) data set to a more specific downstream task trained on more specific (structured) data sets.
 
 The **pre-training** part of models like BERT and GPT is typically unsupervised working on unlabelled data, whereas the fine-tuning (transfer learning) part is typically supervised, working on labeled data.
 
@@ -73,11 +73,22 @@ Examples:
 * Multi-Hop Question Answering (QA): combine information from multiple sources and apply reasoning across multiple steps
 * Theorem Proving: prove mathematical theorems or verify logical statements based on a set of axioms and rules
 
-## Models
+## Neural Networks & Models
 
 ### Definitions
-* [Model](https://learn.microsoft.com/en-us/windows/ai/windows-ml/what-is-a-machine-learning-model): a neural network that will perform a task.
+* [ML Model](https://en.wikipedia.org/wiki/Machine_learning#Models): a mathematical model that can be used to make predictions
+* [Neural Network](https://en.wikipedia.org/wiki/Neural_network_(machine_learning)): an ML model inspired by the structure and function of biological neural networks in animal brains
+
+#### Deep Learning
+Deep Learning is a technique that can be applied within each learning paradigm.
+
+The term "deep" in "Deep Neural Network" (DNN) refers to the multiple/many layers in the neural network that are used for training. For example, in supervised deep learning, a DNN is trained with labeled data using backpropagation and gradient descent.
+
+Examples of DNNs are:
+
 * [Transformer](https://huggingface.co/docs/transformers/en/index): an ML model based on the [Transformer](https://research.google/blog/transformer-a-novel-neural-network-architecture-for-language-understanding/) architecture (from 2017 paper "Attention Is All You Need" by Vaswani et al.) that can be applied to multiple modalities. Most modern models are Transformer-based.
+* [Convolutional Neural Networks](https://en.wikipedia.org/wiki/Convolutional_neural_network) (CNNs): a regularized type of feedforward neural network that learns features by itself via filter (or kernel) optimization
+* Generative Adversarial Networks (GANs): a class of machine learning frameworks and a prominent framework for approaching generative artificial intelligence where two neural networks contest with each other in the form of a zero-sum game, where one agent's gain is another agent's loss.
 
 #### Model "alias terms"
 * Classification: Classifier
