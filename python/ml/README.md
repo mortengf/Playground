@@ -28,7 +28,7 @@ Predict, with some probability, to which class an example belongs (which label d
 Examples:
  * Natural Language Processing (NLP), e.g. text generation/classification/summarization, sentiment analysis, translation, text-to-speech/speech-to-text, etc.
  * Image Generation (text-to-image) and image recognition (image-to-text)
- * Disease Diagnosis/Drug Design
+ * Healthcare, e.g. disease diagnosis and medicine design
 
 ##### Regression
 Predict continuous, numeric values.
@@ -101,6 +101,16 @@ Examples:
 
 See more models under "Multi-Modal & Reasoning Models" below.
 
+##### Specialized: Healthcare
+Various models fine-tuned specifically for healthcare applications.
+
+Examples:
+* [AlphaFold](https://deepmind.google/technologies/alphafold/) (Google DeepMind): inference of the structure of a protein from its amino acid sequence for designing medicine.
+* [Solo, Ensemble & Symphony](https://www.corti.ai/foundation-models) (Corti): models for healthcare-specific conversations and medical coding
+
+##### Specialized: ...
+TODO: add example
+
 #### Text-to-Image & Image-to-Text Models
 * Text-to-image: generate images from text input
 * Image-to-text: perform image recognition to create textual descriptions of images
@@ -124,14 +134,6 @@ Generate videos from text input.
 * [Claude Haiku/Sonnet/Opus](https://www.anthropic.com/claude) (Anthropic)
 * [Pixtral](https://mistral.ai/en/news/pixtral-large) (Mistral)
 * [DeepSeek-R1](https://github.com/deepseek-ai/DeepSeek-R1) (DeepSeek)
-
-#### Other Model Types
-
-##### Drug Design
-[AlphaFold](https://deepmind.google/technologies/alphafold/) (Google DeepMind): inference of the structure of a protein from its amino acid sequence.
-
-##### ...
-TODO: add example
 
 ## Data Sets
 
