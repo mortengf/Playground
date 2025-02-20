@@ -22,7 +22,7 @@ The two most common supervised tasks are:
 * Classification
 * Regression
 
-##### Classification
+##### Task: Classification
 Predict, with some probability, to which class an example belongs (which label does it have, e.g. 0: "not equivalent", 1: "equivalent"?).
 
 Examples:
@@ -30,7 +30,7 @@ Examples:
  * Image Generation (text-to-image) and image recognition (image-to-text)
  * Healthcare, e.g. disease diagnosis and medicine design
 
-##### Regression
+##### Task: Regression
 Predict continuous, numeric values.
 
 Examples: house prices, weather forecasts, GDP growth, etc.
@@ -48,7 +48,7 @@ TODO: add examples of tasks.
 #### Paradigm: Unsupervised
 Find patterns in unlabelled (unstructured) data.
 
-Examples:
+Example Tasks:
 * Clustering: group similar items together without predefined labels, e.g. anomaly detection
 * Dimensionality Reduction: reduce the number of input features while preserving essential information
 * Imputation (fill in the gaps)
@@ -58,17 +58,19 @@ Examples:
 #### Paradigm: Reinforcement Learning
 Model interacts with an environment and over time learns a policy (via rewards) to improve the performance of some function.
 
-Examples: Chess, Go, StarCraft, robot movement, etc.
+Example tasks: Chess, Go, StarCraft, robot movement, etc.
 
 #### Paradigm: Transfer Learning
 Transfer "knowledge" (weights?) from a "broad"/generic task trained on large (unstructured) data set to a more specific downstream task trained on more specific (structured) data sets.
 
 The **pre-training** part of models like BERT and GPT is typically unsupervised working on unlabelled data, whereas the fine-tuning (transfer learning) part is typically supervised, working on labeled data.
 
+Example tasks: TODO: add examples
+
 #### Paradigm: Reasoning
 Infer/deduce/derive conclusions beyond surface-level pattern recognition
 
-Examples:
+Example tasks:
 * Natural Language Inference (NLI), e.g. is a hypothesis entailed/contradicted by a premise.
 * Multi-Hop Question Answering (QA): combine information from multiple sources and apply reasoning across multiple steps
 * Theorem Proving: prove mathematical theorems or verify logical statements based on a set of axioms and rules
