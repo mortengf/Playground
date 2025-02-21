@@ -1,28 +1,15 @@
 # Prerequisites
 Install .NET 9 SDK.
 
-# Create a Project
-Since .NET version ? it is no longer possible - or at least recommended - to run the C# compiler (`csc`) standalone against a single source file.
+# Compiling Source Code
+Since .NET Core 1.0 (June, 2016) it is no longer recommended to run the C# compiler (`csc`) standalone against a single source file (only if low-level compiler control is needed).
 
-Instead, create a project. For example, to create a command line (CLI) project:
+Instead, use a project as described below.
 
-```
-mkdir <ProjectName>
-dotnet new console
-```
+# Projects
+1. Create the project. 
+   * For example, to create a command line (CLI) project: `dotnet new console --name <ProjectName>`
+1. Build the project: `dotnet build`
+1. Run the project: `dotnet run`
+   * Running a project will automatically build the beforehand.
 
-# Build
-In the project folder:
-
-```
-dotnet build
-```
-
-# Run
-In the project folder:
-
-```
-dotnet run
-```
-
-The project is automatically built beforehand.
