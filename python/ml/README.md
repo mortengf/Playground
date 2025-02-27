@@ -163,14 +163,14 @@ Primary outputs:
 * Model weights: learned parameters (bias)
 
 #### Validation (`validation`)
-Validation and tweaking of the chosen model/hyper parameters/hidden units. Performed iteratively.
+Validation and tweaking of the chosen model/hyper parameters/hidden units used during the modeling process to compare candidate models. Performed iteratively.
 
 Output is in the form of accurracy/loss.
 
 Sometimes (but not very often?) this data set is omitted.
 
 #### Evaluation/test (`test`)
-Evaluation of the model against unknown data. Used after all training and validation has been performed.
+Evaluation of the model against unknown data. Used after all training and validation has been performed to obtain an unbiased estimation of the performance of the model.
 
 Output is in the form of accurracy/precision/recall.
 
