@@ -10,6 +10,8 @@ Instead, use a project as described below.
 1. Create the project. 
    * For example, to create a command line (CLI) project: `dotnet new console --name <ProjectName>`
 1. Build the project: `dotnet build`
+1. Test the project: `dotnet test`
+   * Testing a project will automatically build (`restore`) the project beforehand.
 1. Run the project: `dotnet run`
-   * Running a project will automatically build the beforehand.
+   * Running a project will automatically build (`restore`) the project beforehand.
 
