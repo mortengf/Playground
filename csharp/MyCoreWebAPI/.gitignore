@@ -481,4 +481,4 @@ $RECYCLE.BIN/
 *.swp
 .azure
 
-**/app.db
+**/app.db*
