@@ -15,3 +15,5 @@ Instead, use a project as described below.
 1. Run the project: `dotnet run`
    * Running a project will automatically build (`restore`) the project beforehand.
 
+# Timeline
+See https://github.com/ibrahimatay/Csharp-Features for a very nice timeline of C# and .NET, including which features were released in which versions.
