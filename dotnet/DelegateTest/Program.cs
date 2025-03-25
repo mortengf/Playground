@@ -13,21 +13,21 @@ public class Program {
 
     public static void Main(string[] args) {
         // Instantiate the delegate - standard syntax
-        TheBestDelegate myDelegate = new TheBestDelegate(PrintTheBestMessage);
+        TheBestDelegate nisseBrusDelegate = new TheBestDelegate(PrintTheBestMessage);
 
         // Invoke the delegate
-        int literNissebrusTilbage = myDelegate("Nissebrus");
-        Console.WriteLine("Der er " + literNissebrusTilbage + " liter Nissebrus tilbage");
+        int litersOfNissebrusRemaining = nisseBrusDelegate("Nissebrus");
+        Console.WriteLine("Der er " + litersOfNissebrusRemaining + " liter Nissebrus tilbage");
 
-        // Instantiate the delegate - lambda syntax (reuse existing object)
-        myDelegate = (message) => { 
+        // Instantiate the delegate - lambda syntax
+        TheBestDelegate chiliCheeseRingsDelegate = (message) => { 
             Console.WriteLine(message + " og lambda-style delegates er det bedste!");
             return 8;
         };
 
         // Invoke the delegate again
-        int chiliCheeseRingsTilbage = myDelegate("Chili-Cheese Rings");
-        Console.WriteLine("Der er " + chiliCheeseRingsTilbage + " poser Chili-Cheese Rings tilbage");        
+        int numberOfChiliCheeseRingsRemaining = chiliCheeseRingsDelegate("Chili-Cheese Rings");
+        Console.WriteLine("Der er " + numberOfChiliCheeseRingsRemaining + " poser Chili-Cheese Rings tilbage");        
     }
 
 }
