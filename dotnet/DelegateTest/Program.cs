@@ -17,6 +17,7 @@ public class Program {
         int chiliCheeseRingsTilbage = myDelegate("Chili-Cheese Rings");
         Console.WriteLine("Der er " + chiliCheeseRingsTilbage + " poser Chili-Cheese Rings tilbage");        
     }
+    
     public static int PrintTheBestMessage(string message) {
         Console.WriteLine(message + " og delegates er det bedste!");
         return 10;
