@@ -19,13 +19,13 @@ public class Program {
         int litersOfNissebrusRemaining = nisseBrusDelegate("Nissebrus");
         Console.WriteLine("Der er " + litersOfNissebrusRemaining + " liter Nissebrus tilbage");
 
-        // Instantiate the delegate - lambda syntax
+        // Instantiate another delegate, providing a lambda-style (inline) implementation
         TheBestDelegate chiliCheeseRingsDelegate = (message) => { 
             Console.WriteLine(message + " og lambda-style delegates er det bedste!");
             return 8;
         };
 
-        // Invoke the delegate again
+        // Invoke the delegate
         int numberOfChiliCheeseRingsRemaining = chiliCheeseRingsDelegate("Chili-Cheese Rings");
         Console.WriteLine("Der er " + numberOfChiliCheeseRingsRemaining + " poser Chili-Cheese Rings tilbage");        
     }
